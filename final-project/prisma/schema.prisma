@@ -15,6 +15,7 @@ model User {
   id        String   @id @db.Uuid @default(uuid())
   createdAt DateTime @default(now())
   email     String   @unique
+  image     String?
   name      String?
   boards    Board[]
 }
@@ -24,8 +25,7 @@ model Board {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   title     String   @db.VarChar(255)
-  author    User     @relation(fields: [authorId], references: [id])
-  authorId  String   @db.Uuid
+  users     User[]   
   stacks    Stack[]
 }
 
