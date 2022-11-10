@@ -6,7 +6,7 @@ import Welcome from "../components/Welcome";
 
 //prisma.user.create()
 //prisma.user.findMany()
-const Home: React.FC = () => {
+const App: React.FC = () => {
     return (
         <>
             <Layout>
@@ -16,4 +16,4 @@ const Home: React.FC = () => {
     );
 };
 
-export default Home;
+export default App;

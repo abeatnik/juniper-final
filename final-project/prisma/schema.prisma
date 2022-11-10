@@ -54,10 +54,12 @@ model VerificationToken {
 model User {
   id        String   @id @db.Uuid @default(uuid())
   createdAt DateTime @default(now()) @map(name: "created_at")
-  email     String?   @unique
+  email     String  @unique
   emailVerified DateTime?
   image     String?
   name      String?
+  first     String?
+  last      String?
   accounts  Account[]
   sessions  Session[]
   boards    Board[]
@@ -92,3 +94,4 @@ model Card {
   stack       Stack    @relation(fields: [stackId], references: [id])
   stackId     String   @db.Uuid
 }
+

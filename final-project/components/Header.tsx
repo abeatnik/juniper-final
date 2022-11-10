@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { signOut, useSession } from "next-auth/react";
+import { useSession, signIn, signOut } from "next-auth/react";
 import { isDragActive } from "framer-motion";
 
 const Header: React.FC = () => {
@@ -13,11 +13,16 @@ const Header: React.FC = () => {
     if (!session) {
         right = (
             <div className="right">
-                <Link href="api/auth/signin">Login</Link>
+                <button onClick={() => signIn()}>Login</button>
+                {/* <Link href="api/auth/signin">Login</Link> */}
             </div>
         );
     } else {
-        right = <p>you are now signed in</p>;
+        right = (
+            <div className="right">
+                <button onClick={() => signOut()}>Logout</button>
+            </div>
+        );
     }
 
     return <nav>{right}</nav>;
