@@ -73,7 +73,10 @@ const Board: React.FC<BoardProps> = (props: BoardProps) => {
             </h1>
             <p>{`Welcome to your board, ${currentUser && currentUser.name}`}</p>
             <p>This is your dashboard</p>
-            <StacksComponent stackData={props.stackData} />
+            <StacksComponent
+                stackData={props.stackData}
+                boardId={props.currentBoard && props.currentBoard.id}
+            />
         </>
     );
 };

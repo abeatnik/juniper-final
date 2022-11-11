@@ -1,10 +1,11 @@
 import { Stack, Card } from "@prisma/client";
-import CardsComponent from "./CardsComponent";
+import CreateStack from "./CreateStack";
 import SingleStackComponent from "./SingleStack";
 import { useState, useEffect } from "react";
 
 interface StackProps {
     stackData: (Stack & { cards: Card[] })[] | null;
+    boardId: string | null;
 }
 
 const StacksComponent: React.FC<StackProps> = (props: StackProps) => {
@@ -28,7 +29,13 @@ const StacksComponent: React.FC<StackProps> = (props: StackProps) => {
 
     return (
         <>
-            <div className="stack-container">{showStacks}</div>
+            <div className="stack-container">
+                {showStacks}
+                <CreateStack
+                    addNewStack={addNewStack}
+                    boardId={props.boardId}
+                />
+            </div>
         </>
     );
 };
