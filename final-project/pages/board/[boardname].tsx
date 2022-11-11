@@ -2,7 +2,9 @@ import { GetServerSideProps } from "next";
 import prisma from "../../lib/prisma";
 import { authOptions } from "../api/auth/[...nextauth]";
 import { unstable_getServerSession } from "next-auth/next";
-import { useState, useEffect } from "react";
+import { Board, User, Stack, Card } from "@prisma/client";
+import { useSession } from "next-auth/react";
+import StacksComponent from "../../components/StackComponent";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
     const { boardname } = context.query;
@@ -19,21 +21,59 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
             ? session.user.email
             : "";
 
-    const currentBoard = await prisma.board.findUnique({
-        include: { users: true },
+    const data = await prisma.board.findUnique({
         where: {
             id: boardId,
-            users: { some: { email: userEmail } },
+        },
+        include: {
+            stacks: true,
+            users: true,
         },
     });
-    console.log("currentBoard, ", currentBoard);
-    return { props: currentBoard };
+
+    const authorized =
+        data && data.users.some((user) => user.email === userEmail);
+
+    const currentBoard: Board & {
+        stacks: Stack[];
+        users: User[];
+    } = authorized ? JSON.parse(JSON.stringify(data)) : null;
+
+    const allCards = await prisma.stack.findMany({
+        where: {
+            id: { in: currentBoard.stacks.map((stack) => stack.id) },
+        },
+        include: {
+            cards: true,
+        },
+    });
+
+    const stackData: (Stack & { cards: Card[] }) | null =
+        authorized && JSON.parse(JSON.stringify(allCards));
+
+    return { props: { currentBoard, stackData } };
 };
 
-const Board: React.FC = () => {
+interface BoardProps {
+    currentBoard: (Board & { users: User[]; stacks: Stack[] }) | null;
+    stackData: (Stack & { cards: Card[] })[] | null;
+}
+
+const Board: React.FC<BoardProps> = (props: BoardProps) => {
+    const { data: session, status } = useSession();
+    const userEmail = session?.user && session?.user.email;
+    const currentUser =
+        props.currentBoard &&
+        props.currentBoard.users.find((user) => user.email === userEmail);
+
     return (
         <>
-            <p>Welcome to my board</p>
+            <h1 className="board-title">
+                {props.currentBoard && props.currentBoard.title}
+            </h1>
+            <p>{`Welcome to your board, ${currentUser && currentUser.name}`}</p>
+            <p>This is your dashboard</p>
+            <StacksComponent stackData={props.stackData} />
         </>
     );
 };
