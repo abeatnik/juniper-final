@@ -15,7 +15,8 @@ const SingleStackComponent: React.FC<SingleStackProps> = ({ stack }) => {
     }, []);
 
     const addNewCard = (card: Card) => {
-        setStackCards([...stackCards, card]);
+        stackCards && setStackCards([...stackCards, card]);
+        !stackCards && setStackCards([card]);
     };
 
     return (

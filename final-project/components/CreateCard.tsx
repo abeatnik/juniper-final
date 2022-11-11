@@ -13,12 +13,13 @@ const CreateCard: React.FC<CreateCardProps> = ({ stackId, addNewCard }) => {
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
         try {
-            const res = await fetch(`/api/create/card/`, {
+            const res = await fetch("/api/create/card", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ title, description, stackId }),
             });
             const newCard = await res.json();
+            console.log("new Card: ", newCard);
             addNewCard(newCard);
             setEditMode(!editMode);
         } catch (error) {

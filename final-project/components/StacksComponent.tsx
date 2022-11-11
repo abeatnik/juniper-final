@@ -24,7 +24,11 @@ const StacksComponent: React.FC<StackProps> = (props: StackProps) => {
     const showStacks =
         allStacks &&
         allStacks.map((stack) => {
-            return <SingleStackComponent stack={stack} />;
+            return (
+                <div key={stack.id}>
+                    <SingleStackComponent stack={stack} />
+                </div>
+            );
         });
 
     return (
