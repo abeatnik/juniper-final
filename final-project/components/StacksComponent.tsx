@@ -1,21 +1,22 @@
 import { Stack, Card } from "@prisma/client";
+import CardsComponent from "./CardsComponent";
 
 interface StackProps {
     stackData: (Stack & { cards: Card[] })[] | null;
 }
 
-const StackComponent: React.FC<StackProps> = (props: StackProps) => {
+const StacksComponent: React.FC<StackProps> = (props: StackProps) => {
     const showStacks =
         props.stackData &&
         props.stackData.map((stack) => {
             return (
-                <div className="stack">
-                    <h3>{stack.title}</h3>
+                <div className="stack" key={stack.id}>
+                    <h2>{stack.title}</h2>
                     <p>
                         {"created on " +
                             new Date(stack.createdAt).toDateString()}
                     </p>
-                    <p>This will be replaced by a card component...</p>
+                    <CardsComponent cards={stack.cards} />
                 </div>
             );
         });
@@ -27,4 +28,4 @@ const StackComponent: React.FC<StackProps> = (props: StackProps) => {
     );
 };
 
-export default StackComponent;
+export default StacksComponent;

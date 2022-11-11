@@ -4,7 +4,7 @@ import { authOptions } from "../api/auth/[...nextauth]";
 import { unstable_getServerSession } from "next-auth/next";
 import { Board, User, Stack, Card } from "@prisma/client";
 import { useSession } from "next-auth/react";
-import StacksComponent from "../../components/StackComponent";
+import StacksComponent from "../../components/StacksComponent";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
     const { boardname } = context.query;
