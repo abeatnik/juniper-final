@@ -1,12 +1,12 @@
 import Layout from "../components/Layout";
 import { GetServerSideProps } from "next";
 import prisma from "../lib/prisma";
-import { Prisma, User, Board } from "@prisma/client";
+import { Board } from "@prisma/client";
 import { authOptions } from "./api/auth/[...nextauth]";
 import { unstable_getServerSession } from "next-auth/next";
-import { useRouter } from "next/router";
 import CreateBoard from "../components/CreateBoard";
 import { useState, useEffect } from "react";
+import Link from "next/link";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
     const session = await unstable_getServerSession(
@@ -46,11 +46,6 @@ const Home: React.FC<HomeProps> = (props: HomeProps) => {
         setUserBoards(props.boards);
     }, []);
 
-    //https://www.joshwcomeau.com/nextjs/refreshing-server-side-props/
-    // const refreshData = () => router.replace(router.asPath);
-
-    // console.log("first", props.boards); ?????
-
     const addNewBoard = (board: Board) => {
         setUserBoards([...userBoards, board]);
     };
@@ -59,7 +54,7 @@ const Home: React.FC<HomeProps> = (props: HomeProps) => {
         userBoards &&
         userBoards.map((board) => (
             <li key={board.id}>
-                <h4>{board.title}</h4>
+                <Link href={`/board/${board.id}`}>{board.title}</Link>
                 <p>
                     {"created on " + new Date(board.createdAt).toDateString()}
                 </p>
