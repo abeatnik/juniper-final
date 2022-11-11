@@ -1,8 +1,8 @@
 import React, { FormEvent, useState } from "react";
-import { Router } from "next/router";
+import { Board } from "@prisma/client";
 
-const CreateBoard: React.FC<{ refreshData: () => Promise<boolean> }> = (props: {
-    refreshData: () => Promise<boolean>;
+const CreateBoard: React.FC<{ addNewBoard: (board: Board) => void }> = ({
+    addNewBoard,
 }) => {
     const [title, setTitle] = useState("");
     const [editMode, setEditMode] = useState(false);
@@ -15,9 +15,9 @@ const CreateBoard: React.FC<{ refreshData: () => Promise<boolean> }> = (props: {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ title }),
             });
-            if (res.status < 300) {
-                props.refreshData();
-            }
+            const newBoard = await res.json();
+            console.log("newBoard: ", newBoard);
+            addNewBoard(newBoard);
             setEditMode(!editMode);
         } catch (error) {
             console.error(error);

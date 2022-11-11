@@ -12,25 +12,14 @@ export default async function handle(
         session && typeof session.user?.email === "string"
             ? session.user.email
             : "";
-    const data = await prisma.user.findUnique({
-        where: {
-            email: userEmail,
-        },
-        select: {
-            id: true,
+    const result = await prisma.board.create({
+        data: {
+            title: title,
+            users: {
+                connect: { email: userEmail },
+            },
         },
     });
-
-    const result =
-        data &&
-        (await prisma.board.create({
-            data: {
-                title: title,
-                users: {
-                    connect: { id: data.id },
-                },
-            },
-        }));
-
+    console.log("inserted in db: ", result);
     res.json(result);
 }
