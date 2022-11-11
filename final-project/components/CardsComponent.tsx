@@ -11,7 +11,9 @@ const CardsComponent: React.FC<CardProps> = (props: CardProps) => {
             return (
                 <div className="card" key={card.id}>
                     <h4>{card.title}</h4>
-                    <p>{"created at " + new Date(card.createdAt).toString()}</p>
+                    <p>
+                        <span>{new Date(card.createdAt).toUTCString()}</span>
+                    </p>
                     <p>{card.description}</p>
                 </div>
             );

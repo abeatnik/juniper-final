@@ -1,29 +1,34 @@
 import { Stack, Card } from "@prisma/client";
 import CardsComponent from "./CardsComponent";
+import SingleStackComponent from "./SingleStack";
+import { useState, useEffect } from "react";
 
 interface StackProps {
     stackData: (Stack & { cards: Card[] })[] | null;
 }
 
 const StacksComponent: React.FC<StackProps> = (props: StackProps) => {
+    const [allStacks, setAllStacks] = useState<
+        (Stack & { cards: Card[] })[] | null
+    >([]);
+
+    useEffect(() => {
+        props.stackData && setAllStacks(props.stackData);
+    }, []);
+
+    const addNewStack = (stack: Stack & { cards: Card[] }) => {
+        allStacks && setAllStacks([...allStacks, stack]);
+    };
+
     const showStacks =
-        props.stackData &&
-        props.stackData.map((stack) => {
-            return (
-                <div className="stack" key={stack.id}>
-                    <h2>{stack.title}</h2>
-                    <p>
-                        {"created on " +
-                            new Date(stack.createdAt).toDateString()}
-                    </p>
-                    <CardsComponent cards={stack.cards} />
-                </div>
-            );
+        allStacks &&
+        allStacks.map((stack) => {
+            return <SingleStackComponent stack={stack} />;
         });
 
     return (
         <>
-            <div className="stack-container">{showStacks && showStacks}</div>
+            <div className="stack-container">{showStacks}</div>
         </>
     );
 };

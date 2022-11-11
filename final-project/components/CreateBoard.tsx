@@ -16,7 +16,6 @@ const CreateBoard: React.FC<{ addNewBoard: (board: Board) => void }> = ({
                 body: JSON.stringify({ title }),
             });
             const newBoard = await res.json();
-            console.log("newBoard: ", newBoard);
             addNewBoard(newBoard);
             setEditMode(!editMode);
         } catch (error) {
