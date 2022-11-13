@@ -18,7 +18,7 @@ const AddMessage: React.FC<AddMessageProps> = ({ boardId, addNewMessage }) => {
             const res = await fetch("/api/create/message", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ text, boardId, email }),
+                body: JSON.stringify({ text: text.trim(), boardId, email }),
             });
             const newMessage = await res.json();
             addNewMessage(newMessage);

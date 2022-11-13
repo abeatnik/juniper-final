@@ -13,7 +13,7 @@ const CreateBoard: React.FC<{ addNewBoard: (board: Board) => void }> = ({
             const res = await fetch("/api/create/board", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ title }),
+                body: JSON.stringify({ title: title.trim() }),
             });
             const newBoard = await res.json();
             addNewBoard(newBoard);
@@ -35,7 +35,6 @@ const CreateBoard: React.FC<{ addNewBoard: (board: Board) => void }> = ({
         <>
             <div className="add-board-popup">
                 <form onSubmit={handleSubmit}>
-                    <p>Board Name: </p>
                     <input
                         name="newBoard"
                         type="text"

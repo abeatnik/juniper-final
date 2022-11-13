@@ -1,4 +1,3 @@
-import Layout from "../components/Layout";
 import { GetServerSideProps } from "next";
 import prisma from "../lib/prisma";
 import { Board } from "@prisma/client";
@@ -8,6 +7,8 @@ import CreateBoard from "../components/CreateBoard";
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
+import LoginLogout from "../components/LoginLogout";
+import JoinBoard from "../components/JoinBoard";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
     const session = await unstable_getServerSession(
@@ -63,15 +64,21 @@ const Home: React.FC<HomeProps> = (props: HomeProps) => {
         ));
     return (
         <>
-            <Layout>
-                {status === "authenticated" && (
-                    <>
-                        <ul className="board-list">{boardList}</ul>
-                        <CreateBoard addNewBoard={addNewBoard} />
-                    </>
-                )}
-                {status !== "authenticated" && <h1>Welcome</h1>}
-            </Layout>
+            <div className="nav-bar">
+                <JoinBoard />
+                <LoginLogout />
+            </div>
+            <div className="main-app">
+                <div className="home">
+                    {status === "authenticated" && (
+                        <>
+                            <ul className="board-list">{boardList}</ul>
+                            <CreateBoard addNewBoard={addNewBoard} />
+                        </>
+                    )}
+                    {status !== "authenticated" && <h1>Welcome</h1>}
+                </div>
+            </div>
         </>
     );
 };

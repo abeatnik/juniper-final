@@ -13,12 +13,19 @@ const socketHandler = async (
         res.socket.server.io = io;
 
         io.on("connection", (socket) => {
-            socket.on("room", function (room) {
+            console.log("socket connected");
+            socket.on("room", (room) => {
+                console.log(`${socket.id} joined room: ${room}`);
                 socket.join(room);
             });
         });
+
+        io.on("newMessage", (boardId, message) => {
+            console.log("newMessage!");
+            io.in(`room-${boardId}`).emit("receiveMessage", message);
+        });
     }
-    // console.log(Array.from(res.socket.server.io.sockets.sockets));
+    console.log(Array.from(res.socket.server.io.sockets.sockets));
     res.end();
 };
 

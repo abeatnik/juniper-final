@@ -15,7 +15,7 @@ const CreateStack: React.FC<CreateStackProps> = ({ boardId, addNewStack }) => {
             const res = await fetch(`/api/create/stack/`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ title, boardId }),
+                body: JSON.stringify({ title: title.trim(), boardId }),
             });
             const newStack = await res.json();
             addNewStack(newStack);
@@ -37,7 +37,6 @@ const CreateStack: React.FC<CreateStackProps> = ({ boardId, addNewStack }) => {
         <>
             <div className="add-stack-popup">
                 <form onSubmit={handleSubmit}>
-                    <p>New Stack: </p>
                     <input
                         name="stackTitle"
                         type="text"

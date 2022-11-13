@@ -19,19 +19,29 @@ const BoardChat = () => {
         getMessages();
 
         return () => {
-            socket && console.log("socket", socket);
-            socket && socket.disconnect();
+            // socket && socket.disconnect();
         };
     }, []);
 
     const initSocket = async () => {
+        console.log("initializing socket");
         await fetch("/api/socket");
         socket = io();
 
         socket.on("connect", () => {
+            console.log("connected");
             socket.emit("room", `room-${boardId}`);
-            console.log(socket.id);
+            setConnected(true);
         });
+
+        socket.on("receiveMessage", (message: Message & { user: User }) => {
+            setMessages(messages && [message, ...messages]);
+        });
+
+        socket.on("welcome", () => {
+            console.log("hurray");
+        });
+
         return socket;
     };
 
@@ -40,15 +50,16 @@ const BoardChat = () => {
         const boardMessages: (Message & {
             user: User;
         })[] = await data.json();
-        setMessages(boardMessages.reverse());
+        setMessages(boardMessages);
     };
 
     const addNewMessage = (message: Message & { user: User }) => {
-        setMessages(messages && [...messages, message]);
+        console.log(socket);
+        socket.emit("newMessage", boardId, message);
     };
 
     return (
-        <div className="chat-component">
+        <div className="chat-container">
             <h2>Chat</h2>
             <div className="message-container">
                 <ChatMessages messages={messages} />

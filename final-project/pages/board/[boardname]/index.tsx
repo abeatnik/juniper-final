@@ -7,6 +7,9 @@ import { useSession } from "next-auth/react";
 import StacksComponent from "../../../components/StacksComponent";
 import AddMember from "../../../components/AddMember";
 import BoardChat from "../../../components/BoardChat";
+import LoginLogout from "../../../components/LoginLogout";
+import JoinBoard from "../../../components/JoinBoard";
+import HomeButton from "../../../components/HomeButton";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
     const { boardname } = context.query;
@@ -70,19 +73,31 @@ const Board: React.FC<BoardProps> = (props: BoardProps) => {
 
     return (
         <>
-            <h1 className="board-title">
-                {props.currentBoard && props.currentBoard.title}
-            </h1>
-            <p>{`Welcome to your board, ${
-                session?.user && session.user.name
-            }`}</p>
-            <p>This is your dashboard</p>
-            <AddMember boardId={props.currentBoard && props.currentBoard.id} />
-            <StacksComponent
-                stackData={props.stackData}
-                boardId={props.currentBoard && props.currentBoard.id}
-            />
-            <BoardChat />
+            <div className="nav-bar">
+                <HomeButton />
+                <AddMember
+                    boardId={props.currentBoard && props.currentBoard.id}
+                />
+                <JoinBoard />
+                <LoginLogout />
+            </div>
+            <div className="main-app">
+                <div className="board-container">
+                    <div className="board-info">
+                        <h1 className="board-title">
+                            {props.currentBoard && props.currentBoard.title}
+                        </h1>
+                        <p>{`Welcome to your board, ${
+                            session?.user && session.user.name
+                        }`}</p>
+                    </div>
+                    <StacksComponent
+                        stackData={props.stackData}
+                        boardId={props.currentBoard && props.currentBoard.id}
+                    />
+                    <BoardChat />
+                </div>
+            </div>
         </>
     );
 };

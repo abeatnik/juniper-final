@@ -16,7 +16,11 @@ const CreateCard: React.FC<CreateCardProps> = ({ stackId, addNewCard }) => {
             const res = await fetch("/api/create/card", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ title, description, stackId }),
+                body: JSON.stringify({
+                    title: title.trim(),
+                    description: description.trim(),
+                    stackId,
+                }),
             });
             const newCard = await res.json();
             addNewCard(newCard);
@@ -39,7 +43,6 @@ const CreateCard: React.FC<CreateCardProps> = ({ stackId, addNewCard }) => {
         <>
             <div className="add-card-popup">
                 <form onSubmit={handleSubmit}>
-                    <p>New Card: </p>
                     <label htmlFor="cardTitle">Title: </label>
                     <input
                         name="cardTitle"

@@ -1,26 +1,99 @@
+* {
+    box-sizing: border-box;
+}
+
 html,
 body {
-  padding: 0;
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+    padding: 0;
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+        Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 
 a {
-  color: inherit;
-  text-decoration: none;
+    color: inherit;
 }
 
-* {
-  box-sizing: border-box;
+ul {
+    list-style-type: none;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
-  body {
-    color: white;
-    background: black;
-  }
+.nav-bar {
+    height: 10vh;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 5vw;
 }
+
+.nav-bar button {
+    margin-left: 1vw;
+}
+
+.home {
+}
+
+.main-app {
+    width: 100vw;
+    overflow-x: hidden;
+}
+
+.board-container {
+    padding: 4vh;
+}
+
+.stack-container {
+    width: 60vw;
+    display: flex;
+    justify-content: space-between;
+    overflow-x: scroll;
+}
+
+.stack-container .stack {
+    border: 1px solid black;
+    padding: 2vh;
+    width: 20vw;
+}
+
+.chat-container {
+    position: absolute;
+    left: 70vw;
+    top: 20vh;
+    width: 25vw;
+}
+
+.chat-container ul {
+    height: 60vh;
+    overflow: scroll;
+}
+
+.chat-container li {
+    display: flex;
+}
+
+.chat-container li > .user-pic {
+    height: 5vh;
+    width: 5vh;
+    overflow: hidden;
+    align-self: flex-start;
+}
+
+.chat-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.chat-container li > .message-content {
+    align-self: flex-start;
+}
+
+/* @media (prefers-color-scheme: dark) {
+    html {
+        color-scheme: dark;
+    }
+    body {
+        color: white;
+        background: black;
+    }
+} */

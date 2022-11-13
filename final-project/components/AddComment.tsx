@@ -18,7 +18,7 @@ const AddComment: React.FC<AddCommentProps> = ({ cardId, addNewComment }) => {
             const res = await fetch("/api/create/comment", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ text, cardId, email }),
+                body: JSON.stringify({ text: text.trim(), cardId, email }),
             });
             const newComment = await res.json();
             addNewComment(newComment);
