@@ -72,6 +72,7 @@ model Board {
   title     String   @db.VarChar(255)
   users     User[]   
   stacks    Stack[]
+  invites  Invite[]
 }
 
 model Stack {
@@ -94,3 +95,11 @@ model Card {
   stackId     String   @db.Uuid
 }
 
+model Invite {
+  id          String   @id @db.Uuid @default(uuid())
+  createdAt   DateTime @default(now()) @map(name: "created_at")
+  updatedAt   DateTime @updatedAt @map(name: "updated_at")
+  valid       Boolean  @default(true)
+  board       Board    @relation(fields: [boardId], references: [id])
+  boardId     String   @db.Uuid
+}
