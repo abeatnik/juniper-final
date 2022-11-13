@@ -1,10 +1,10 @@
 import { GetServerSideProps } from "next";
-import prisma from "../../lib/prisma";
-import { authOptions } from "../api/auth/[...nextauth]";
+import prisma from "../../../lib/prisma";
+import { authOptions } from "../../api/auth/[...nextauth]";
 import { unstable_getServerSession } from "next-auth/next";
 import { Board, User, Stack, Card } from "@prisma/client";
 import { useSession } from "next-auth/react";
-import StacksComponent from "../../components/StacksComponent";
+import StacksComponent from "../../../components/StacksComponent";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
     const { boardname } = context.query;
@@ -71,7 +71,9 @@ const Board: React.FC<BoardProps> = (props: BoardProps) => {
             <h1 className="board-title">
                 {props.currentBoard && props.currentBoard.title}
             </h1>
-            <p>{`Welcome to your board, ${currentUser && currentUser.name}`}</p>
+            <p>{`Welcome to your board, ${
+                session?.user && session.user.name
+            }`}</p>
             <p>This is your dashboard</p>
             <StacksComponent
                 stackData={props.stackData}

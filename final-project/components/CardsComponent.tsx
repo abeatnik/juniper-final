@@ -1,7 +1,12 @@
 import { Stack, Card } from "@prisma/client";
+import { useState } from "react";
+import DeleteCard from "./DeleteCard";
+import SingleCard from "./SingleCard";
 
 interface CardProps {
     cards: Card[] | [];
+    stackName: string | null;
+    deleteCard: (cardId: string) => void;
 }
 
 const CardsComponent: React.FC<CardProps> = (props: CardProps) => {
@@ -9,17 +14,17 @@ const CardsComponent: React.FC<CardProps> = (props: CardProps) => {
         props.cards &&
         props.cards.map((card) => {
             return (
-                <div className="card" key={card.id}>
-                    <h4>{card.title}</h4>
-                    <p>
-                        <span>{new Date(card.createdAt).toUTCString()}</span>
-                    </p>
-                    <p>{card.description}</p>
-                </div>
+                <li key={card.id}>
+                    <SingleCard
+                        card={card}
+                        stackName={props.stackName}
+                        deleteCard={props.deleteCard}
+                    />
+                </li>
             );
         });
 
-    return <div className="cards-container">{showCards}</div>;
+    return <ul className="cards-list">{showCards}</ul>;
 };
 
 export default CardsComponent;

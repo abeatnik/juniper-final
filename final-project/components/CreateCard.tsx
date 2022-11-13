@@ -19,8 +19,9 @@ const CreateCard: React.FC<CreateCardProps> = ({ stackId, addNewCard }) => {
                 body: JSON.stringify({ title, description, stackId }),
             });
             const newCard = await res.json();
-            console.log("new Card: ", newCard);
             addNewCard(newCard);
+            setTitle("");
+            setDescription("");
             setEditMode(!editMode);
         } catch (error) {
             console.error(error);
@@ -55,6 +56,12 @@ const CreateCard: React.FC<CreateCardProps> = ({ stackId, addNewCard }) => {
                         onChange={(e) => setDescription(e.target.value)}
                     />
                     <button type="submit">Create New Card</button>
+                    <button
+                        className="add-item"
+                        onClick={() => setEditMode(!editMode)}
+                    >
+                        x
+                    </button>
                 </form>
             </div>
         </>

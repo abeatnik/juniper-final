@@ -17,6 +17,7 @@ const CreateBoard: React.FC<{ addNewBoard: (board: Board) => void }> = ({
             });
             const newBoard = await res.json();
             addNewBoard(newBoard);
+            setTitle("");
             setEditMode(!editMode);
         } catch (error) {
             console.error(error);
@@ -43,6 +44,12 @@ const CreateBoard: React.FC<{ addNewBoard: (board: Board) => void }> = ({
                         required
                     />
                     <button type="submit">Create New Board</button>
+                    <button
+                        className="add-item"
+                        onClick={() => setEditMode(!editMode)}
+                    >
+                        x
+                    </button>
                 </form>
             </div>
         </>

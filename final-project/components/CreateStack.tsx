@@ -19,6 +19,7 @@ const CreateStack: React.FC<CreateStackProps> = ({ boardId, addNewStack }) => {
             });
             const newStack = await res.json();
             addNewStack(newStack);
+            setTitle("");
             setEditMode(!editMode);
         } catch (error) {
             console.error(error);
@@ -45,6 +46,12 @@ const CreateStack: React.FC<CreateStackProps> = ({ boardId, addNewStack }) => {
                         required
                     />
                     <button type="submit">Create New Stack</button>
+                    <button
+                        className="add-item"
+                        onClick={() => setEditMode(!editMode)}
+                    >
+                        x
+                    </button>
                 </form>
             </div>
         </>
