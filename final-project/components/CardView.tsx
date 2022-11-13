@@ -35,19 +35,13 @@ const CardView: React.FC<CardProps> = ({
         const cardComments: (Comment & {
             user: User;
         })[] = await data.json();
-        setComments(
-            cardComments.sort(
-                (a, b) =>
-                    new Date(a.createdAt).getDate() -
-                    new Date(a.createdAt).getDate()
-            )
-        );
+        setComments(cardComments);
     };
 
     const addNewComment = (comment: (Comment & { user: User }) | null) => {
         const allComments =
             comments && comment
-                ? [...comments.map((item) => item), comment]
+                ? [comment, ...comments.map((item) => item)]
                 : null;
         allComments && setComments(allComments);
     };

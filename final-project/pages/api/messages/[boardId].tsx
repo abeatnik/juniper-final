@@ -5,16 +5,17 @@ export default async function handle(
     req: NextApiRequest,
     res: NextApiResponse
 ) {
-    const { cardId } = req.query;
+    const { boardId } = req.query;
     const result =
-        typeof cardId === "string" &&
-        (await prisma.comment.findMany({
+        typeof boardId === "string" &&
+        (await prisma.message.findMany({
             where: {
-                cardId: cardId,
+                boardId: boardId,
             },
             include: {
                 user: true,
             },
+            take: 20,
             orderBy: {
                 createdAt: "desc",
             },
