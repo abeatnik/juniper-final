@@ -7,6 +7,7 @@ import { useSession } from "next-auth/react";
 import StacksComponent from "../../../components/StacksComponent";
 import AddMember from "../../../components/AddMember";
 import JoinBoard from "../../../components/JoinBoard";
+import BoardChat from "../../../components/BoardChat";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
     const { boardname } = context.query;
@@ -83,6 +84,7 @@ const Board: React.FC<BoardProps> = (props: BoardProps) => {
                 stackData={props.stackData}
                 boardId={props.currentBoard && props.currentBoard.id}
             />
+            <BoardChat />
         </>
     );
 };
