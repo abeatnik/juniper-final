@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import io, { Socket } from "socket.io-client";
+import { useRouter } from "next/router";
 let socket: Socket;
 
 const BoardChat = () => {
+    const router = useRouter();
     const [connected, setConnected] = useState(false);
-
+    const boardId = router.asPath;
     useEffect(() => {
         initSocket();
 
@@ -19,8 +21,9 @@ const BoardChat = () => {
         socket = io();
 
         socket.on("connect", () => {
+            socket.emit("room", `room-${boardId}`);
             console.log("connected");
-            console.log(socket);
+            console.log(socket.id);
         });
         return socket;
     };

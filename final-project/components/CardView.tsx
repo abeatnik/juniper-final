@@ -1,11 +1,13 @@
-import { Stack, Card } from "@prisma/client";
-import { useState } from "react";
+import { User, Card, Comment } from "@prisma/client";
+import { useState, useEffect } from "react";
 import DeleteCard from "./DeleteCard";
+import Comments from "./Comments";
+import AddComment from "./AddComment";
 
 interface CardProps {
     card: Card;
     toggleCard: () => void;
-    deleteCard: (cardId: string | null) => void;
+    deleteCard: (cardId: string) => void;
     stackName: string | null;
 }
 
@@ -16,9 +18,38 @@ const CardView: React.FC<CardProps> = ({
     stackName,
 }) => {
     const [showOptions, setShowOptions] = useState(false);
+    const [comments, setComments] = useState<
+        (Comment & { user: User })[] | null
+    >(null);
+
+    useEffect(() => {
+        getComments(card.id);
+    }, []);
 
     const toggleOptions = () => {
         setShowOptions(!showOptions);
+    };
+
+    const getComments = async (cardId: string) => {
+        const data = await fetch(`/api/comments/${cardId}`);
+        const cardComments: (Comment & {
+            user: User;
+        })[] = await data.json();
+        setComments(
+            cardComments.sort(
+                (a, b) =>
+                    new Date(a.createdAt).getDate() -
+                    new Date(a.createdAt).getDate()
+            )
+        );
+    };
+
+    const addNewComment = (comment: (Comment & { user: User }) | null) => {
+        const allComments =
+            comments && comment
+                ? [...comments.map((item) => item), comment]
+                : null;
+        allComments && setComments(allComments);
     };
 
     return (
@@ -40,6 +71,11 @@ const CardView: React.FC<CardProps> = ({
                 </div>
                 <div className="comments">
                     <h4>Comments</h4>
+                    <AddComment
+                        cardId={card.id}
+                        addNewComment={addNewComment}
+                    />
+                    <Comments comments={comments && comments} />
                 </div>
             </div>
             {showOptions && (

@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useSession, signIn, signOut } from "next-auth/react";
 import { isDragActive } from "framer-motion";
+import JoinBoard from "./JoinBoard";
 
 const Header: React.FC = () => {
     const router = useRouter();
@@ -19,9 +20,12 @@ const Header: React.FC = () => {
         );
     } else {
         right = (
-            <div className="right">
-                <button onClick={() => signOut()}>Logout</button>
-            </div>
+            <>
+                <JoinBoard />
+                <div className="right">
+                    <button onClick={() => signOut()}>Logout</button>
+                </div>
+            </>
         );
     }
 

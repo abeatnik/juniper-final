@@ -62,6 +62,8 @@ model User {
   accounts  Account[]
   sessions  Session[]
   boards    Board[]
+  comments  Comment[]
+  messages  Message[]
   @@map(name: "users")
 }
 
@@ -72,7 +74,8 @@ model Board {
   title     String   @db.VarChar(255)
   users     User[]   
   stacks    Stack[]
-  invites  Invite[]
+  invites   Invite[]
+  messages  Message[]
 }
 
 model Stack {
@@ -93,6 +96,28 @@ model Card {
   description String?  @db.Text
   stack       Stack    @relation(fields: [stackId], references: [id])
   stackId     String   @db.Uuid
+  comments    Comment[]
+}
+
+model Comment {
+  id          String   @id @db.Uuid @default(uuid())
+  createdAt   DateTime @default(now()) @map(name: "created_at") 
+  text        String   @db.Text
+  user        User     @relation(fields: [userId], references: [id])
+  userId      String   @db.Uuid
+  card        Card     @relation(fields: [cardId], references: [id])
+  cardId      String   @db.Uuid
+}
+
+model Message {
+  id          String   @id @db.Uuid @default(uuid())
+  createdAt   DateTime @default(now()) @map(name: "created_at") 
+  text        String   @db.Text
+  user        User     @relation(fields: [userId], references: [id])
+  userId      String   @db.Uuid
+  board       Board    @relation(fields: [boardId], references: [id])
+  boardId     String   @db.Uuid
+
 }
 
 model Invite {

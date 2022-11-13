@@ -6,7 +6,6 @@ import { Board, User, Stack, Card } from "@prisma/client";
 import { useSession } from "next-auth/react";
 import StacksComponent from "../../../components/StacksComponent";
 import AddMember from "../../../components/AddMember";
-import JoinBoard from "../../../components/JoinBoard";
 import BoardChat from "../../../components/BoardChat";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
@@ -79,7 +78,6 @@ const Board: React.FC<BoardProps> = (props: BoardProps) => {
             }`}</p>
             <p>This is your dashboard</p>
             <AddMember boardId={props.currentBoard && props.currentBoard.id} />
-            <JoinBoard />
             <StacksComponent
                 stackData={props.stackData}
                 boardId={props.currentBoard && props.currentBoard.id}

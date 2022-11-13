@@ -11,7 +11,14 @@ const socketHandler = async (
     if (!res.socket.server.io) {
         const io = new Server(res.socket.server as any);
         res.socket.server.io = io;
+
+        io.on("connection", (socket) => {
+            socket.on("room", function (room) {
+                socket.join(room);
+            });
+        });
     }
+    // console.log(Array.from(res.socket.server.io.sockets.sockets));
     res.end();
 };
 
