@@ -61,9 +61,9 @@ const MoveCard: React.FC<MoveCardProps> = ({
         otherStacks &&
         otherStacks.map((stack) => {
             return (
-                <li key={stack.id}>
+                <div key={stack.id}>
                     <button onClick={moveCard(stack.id)}>{stack.title}</button>
-                </li>
+                </div>
             );
         });
 

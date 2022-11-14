@@ -19,7 +19,7 @@ const HomeButton: React.FC<{
                     setContent(name);
                 }}
             >
-                {content}
+                {content || name}
             </Link>
         </button>
     );

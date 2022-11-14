@@ -16,6 +16,9 @@ a {
 
 ul {
     list-style-type: none;
+    margin-block-start: 0;
+    margin-block-end: 0;
+    padding-inline-start: 0;
 }
 
 button {
@@ -121,7 +124,7 @@ button:hover {
 }
 
 .stacks-container {
-    width: 80vw;
+    width: 100%;
     min-height: 60vh;
 }
 
@@ -133,18 +136,40 @@ button:hover {
     justify-content: space-between;
     overflow-x: scroll;
     background-color: white;
-    border: 2px solid red;
 }
 
 .stacks-container .stack {
     padding: 2vh;
     width: 20vw;
     min-height: 40vh;
-    border: 2px solid green;
+    margin-right: 4vh;
+    border: 1px solid black;
+    box-shadow: 2px 2px 40px rgba(0, 0, 0, 0.06),
+        -2px -2px 40px rgba(0, 0, 0, 0.06);
+}
+
+.stacks-container .stack h2 {
+    font-size: 1.2em;
+    margin-left: 2vh;
+    color: rgb(88, 88, 88);
+    text-transform: uppercase;
+}
+
+.stacks-container .stack ul {
+    display: flex;
+    flex-direction: column;
+}
+
+.stacks-container .stack .add-item {
+    margin-left: 4vh;
 }
 
 .stacks-container .card {
-    border: 2px solid blue;
+    border: 1px solid black;
+    border-radius: 2vh;
+    padding-right: 2vh;
+    padding-left: 2vh;
+    margin-bottom: 2vh;
 }
 
 .card-background {
@@ -204,15 +229,24 @@ button:hover {
     right: 0;
     top: 10vh;
     padding: 2vh;
-    padding-top: 10vh;
+    padding-top: 12vh;
     border-left: 1px solid black;
-    width: 25vw;
-    background-color: rgba(209, 209, 209, 0.8);
+    width: 27vw;
+    min-height: 90vh;
+    background-color: rgb(209, 209, 209);
     transition: all 0.3 ease-in-out;
+    box-shadow: 2px 2px 40px rgba(0, 0, 0, 0.06),
+        -2px -2px 40px rgba(0, 0, 0, 0.06);
+}
+
+.chat-container span {
+    position: absolute;
+    right: 4vh;
+    top: 4vh;
 }
 
 .chat-container ul {
-    height: 60vh;
+    height: 54vh;
     overflow: scroll;
 }
 
@@ -223,6 +257,7 @@ button:hover {
 .chat-container li > .user-pic {
     height: 5vh;
     width: 5vh;
+    border-radius: 50%;
     overflow: hidden;
     align-self: flex-start;
 }
@@ -235,6 +270,27 @@ button:hover {
 
 .chat-container li > .message-content {
     align-self: flex-start;
+    border-radius: 2vh;
+}
+
+.chat-container .message-container {
+    background-color: white;
+    padding: 1vh;
+    border: 1px solid black;
+    border-radius: 2vh;
+}
+
+.chat-container .message-container .buttons {
+    display: flex;
+}
+
+.chat-container textarea {
+    width: 23vw;
+    resize: none;
+    min-height: 10vh;
+    padding: 1vh;
+    margin-bottom: 2vh;
+    margin-top: 0.6vh;
 }
 
 /* @media (prefers-color-scheme: dark) {

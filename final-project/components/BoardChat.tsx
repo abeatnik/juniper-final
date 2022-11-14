@@ -79,9 +79,7 @@ const BoardChat = () => {
             )}
             {expanded && (
                 <div className="chat-container">
-                    <h2>Chat</h2>
                     <span>
-                        {" "}
                         <button
                             onClick={() => {
                                 setExpanded(false);

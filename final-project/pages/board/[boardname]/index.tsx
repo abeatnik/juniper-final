@@ -81,16 +81,6 @@ const Board: React.FC<BoardProps> = (props: BoardProps) => {
         props.currentBoard &&
         props.currentBoard.users.find((user) => user.email === userEmail);
 
-    useEffect(() => {
-        setIsBrowser(process.browser);
-    }, []);
-
-    if (typeof window === "undefined") return null;
-
-    if (!session) {
-        return <p>Access Denied</p>;
-    }
-
     return (
         <>
             <div className="nav-bar">

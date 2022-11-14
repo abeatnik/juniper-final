@@ -15,15 +15,15 @@ const StacksComponent: React.FC<StackProps> = (props: StackProps) => {
     const [allStacks, setAllStacks] = useState<
         (Stack & { cards: Card[] })[] | null
     >(null);
-    const [showStacks, setShowStacks] = useState<JSX.Element[] | null>(null);
+    // const [showStacks, setShowStacks] = useState<JSX.Element[] | null>(null);
 
     useEffect(() => {
         props.stackData && setAllStacks(props.stackData);
     }, []);
 
-    useEffect(() => {
-        renderStacks();
-    }, [allStacks]);
+    // useEffect(() => {
+    //     renderStacks();
+    // }, [allStacks]);
 
     const addNewStack = (stack: Stack & { cards: Card[] }) => {
         allStacks && setAllStacks([...allStacks, stack]);
@@ -65,65 +65,26 @@ const StacksComponent: React.FC<StackProps> = (props: StackProps) => {
         // setAllStacks(null);
         addCard && setAllStacks([...addCard]);
         console.log(allStacks);
-        // router.replace(router.asPath);
     };
 
-    const renderStacks = () => {
-        const renderedStacks =
-            allStacks &&
-            allStacks.map((stack, index) => {
-                console.log(stack.id);
-                return (
-                    <Draggable
-                        key={stack.id}
-                        draggableId={stack.id}
-                        index={index}
-                    >
-                        {(provided) => (
-                            <li
-                                key={stack.id}
-                                ref={provided.innerRef}
-                                {...provided.draggableProps}
-                                {...provided.dragHandleProps}
-                            >
-                                <SingleStackComponent
-                                    stack={stack}
-                                    updateStacks={updateStacks}
-                                />
-                            </li>
-                        )}
-                    </Draggable>
-                );
-            });
-        setShowStacks(renderedStacks);
-    };
+    const showStacks =
+        allStacks &&
+        allStacks.map((stack, index) => {
+            return (
+                <div key={stack.id}>
+                    <SingleStackComponent
+                        stack={stack}
+                        updateStacks={updateStacks}
+                    />
+                </div>
+            );
+        });
 
     return (
-        <>
-            <DragDropContext
-                onDragEnd={(result, provided) => {
-                    if (!result.destination) return;
-                }}
-            >
-                <>
-                    <Droppable droppableId="board">
-                        {(provided) => (
-                            <ul
-                                className="stacks"
-                                {...provided.droppableProps}
-                                ref={provided.innerRef}
-                            >
-                                {showStacks}
-                                <CreateStack
-                                    addNewStack={addNewStack}
-                                    boardId={props.boardId}
-                                />
-                            </ul>
-                        )}
-                    </Droppable>
-                </>
-            </DragDropContext>
-        </>
+        <div className="stacks">
+            {showStacks}
+            <CreateStack addNewStack={addNewStack} boardId={props.boardId} />
+        </div>
     );
 };
 

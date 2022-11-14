@@ -20,7 +20,7 @@ const SingleStackComponent: React.FC<SingleStackProps> = ({
 
     useEffect(() => {
         stack && setStackCards(stack.cards);
-    }, []);
+    });
 
     const addNewCard = (card: Card) => {
         stackCards && setStackCards([...stackCards, card]);
@@ -31,7 +31,7 @@ const SingleStackComponent: React.FC<SingleStackProps> = ({
         stackCards &&
             setStackCards(stackCards.filter((card) => card.id !== cardId));
     };
-
+    console.log(stack);
     return (
         <div className="stack">
             <h2>{stack && stack.title}</h2>

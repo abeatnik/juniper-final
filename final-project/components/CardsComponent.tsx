@@ -20,45 +20,30 @@ const CardsComponent: React.FC<CardProps> = (props: CardProps) => {
         props.cards &&
         props.cards.map((card, index) => {
             return (
-                <>
-                    <Draggable
-                        key={card.id}
-                        draggableId={card.id}
-                        index={index}
-                    >
-                        {(provided) => (
-                            <li
-                                key={card.id}
-                                ref={provided.innerRef}
-                                {...provided.draggableProps}
-                                {...provided.dragHandleProps}
-                            >
-                                <SingleCard
-                                    card={card}
-                                    stackName={props.stackName}
-                                    deleteCard={props.deleteCard}
-                                    updateStacks={props.updateStacks}
-                                />
-                            </li>
-                        )}
-                    </Draggable>
-                </>
+                <li key={card.id}>
+                    <SingleCard
+                        card={card}
+                        stackName={props.stackName}
+                        deleteCard={props.deleteCard}
+                        updateStacks={props.updateStacks}
+                    />
+                </li>
             );
         });
 
     return (
         <>
-            <Droppable droppableId={"stack-field"}>
-                {(provided) => (
-                    <ul
-                        className={"stacklist " + props.stackName || ""}
-                        {...provided.droppableProps}
-                        ref={provided.innerRef}
-                    >
-                        {showCards}
-                    </ul>
-                )}
-            </Droppable>
+            {/* <Droppable droppableId={"stack-field"}>
+                {(provided) => ( */}
+            <ul
+                className={"stacklist " + props.stackName || ""}
+                // {...provided.droppableProps}
+                // ref={provided.innerRef}
+            >
+                {showCards}
+            </ul>
+            {/* )}
+            </Droppable> */}
         </>
     );
 };
