@@ -5,9 +5,17 @@ import { useState, useEffect } from "react";
 
 interface SingleStackProps {
     stack: (Stack & { cards: Card[] }) | null;
+    updateStacks: (
+        cardId: string | undefined,
+        oldStackId: string | undefined,
+        newStackId: string | undefined
+    ) => void;
 }
 
-const SingleStackComponent: React.FC<SingleStackProps> = ({ stack }) => {
+const SingleStackComponent: React.FC<SingleStackProps> = ({
+    stack,
+    updateStacks,
+}) => {
     const [stackCards, setStackCards] = useState<Card[]>([]);
 
     useEffect(() => {
@@ -31,6 +39,7 @@ const SingleStackComponent: React.FC<SingleStackProps> = ({ stack }) => {
                 cards={stackCards}
                 stackName={stack?.title || null}
                 deleteCard={deleteCard}
+                updateStacks={updateStacks}
             />
             <CreateCard addNewCard={addNewCard} stackId={stack && stack.id} />
         </div>

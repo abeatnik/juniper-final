@@ -8,6 +8,11 @@ interface CardProps {
     cards: Card[] | [];
     stackName: string | null;
     deleteCard: (cardId: string) => void;
+    updateStacks: (
+        cardId: string | undefined,
+        oldStackId: string | undefined,
+        newStackId: string | undefined
+    ) => void;
 }
 
 const CardsComponent: React.FC<CardProps> = (props: CardProps) => {
@@ -23,6 +28,7 @@ const CardsComponent: React.FC<CardProps> = (props: CardProps) => {
                     >
                         {(provided) => (
                             <li
+                                key={card.id}
                                 ref={provided.innerRef}
                                 {...provided.draggableProps}
                                 {...provided.dragHandleProps}
@@ -31,6 +37,7 @@ const CardsComponent: React.FC<CardProps> = (props: CardProps) => {
                                     card={card}
                                     stackName={props.stackName}
                                     deleteCard={props.deleteCard}
+                                    updateStacks={props.updateStacks}
                                 />
                             </li>
                         )}
@@ -41,10 +48,10 @@ const CardsComponent: React.FC<CardProps> = (props: CardProps) => {
 
     return (
         <>
-            <Droppable droppableId={props.stackName || "stack"}>
+            <Droppable droppableId={"stack-field"}>
                 {(provided) => (
                     <ul
-                        className="cards-list"
+                        className={"stacklist " + props.stackName || ""}
                         {...provided.droppableProps}
                         ref={provided.innerRef}
                     >

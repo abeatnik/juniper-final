@@ -65,7 +65,7 @@ const Home: React.FC<HomeProps> = (props: HomeProps) => {
     return (
         <>
             <div className="nav-bar">
-                <JoinBoard />
+                {status === "authenticated" && <JoinBoard />}
                 <LoginLogout />
             </div>
             <div className="main-app">

@@ -39,7 +39,7 @@ const JoinBoard = () => {
         <>
             <button onClick={togglePopup}>Join Board</button>
             {showPopup && (
-                <>
+                <div className="nav-popup">
                     {!approved && (
                         <form onSubmit={handleSubmit}>
                             <p>insert invite code: </p>
@@ -59,7 +59,7 @@ const JoinBoard = () => {
                         </p>
                     )}
                     <button onClick={togglePopup}>x</button>
-                </>
+                </div>
             )}
         </>
     );

@@ -13,7 +13,15 @@ const LoginLogout: React.FC = () => {
     if (!session) {
         return <button onClick={() => signIn()}>Login</button>;
     } else {
-        return <button onClick={() => signOut()}>Logout</button>;
+        return (
+            <button
+                onClick={() => {
+                    signOut();
+                }}
+            >
+                Logout
+            </button>
+        );
     }
 };
 

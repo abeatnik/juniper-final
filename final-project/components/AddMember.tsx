@@ -32,7 +32,7 @@ const AddMember: React.FC<{ boardId: string | null }> = ({ boardId }) => {
         <>
             <button onClick={togglePopup}>Add Member</button>
             {showDialogue && (
-                <>
+                <div className="nav-popup">
                     {!invite && (
                         <>
                             <button onClick={generateInvite}>
@@ -57,7 +57,7 @@ const AddMember: React.FC<{ boardId: string | null }> = ({ boardId }) => {
                             {copied && <span>Copied.</span>}
                         </div>
                     )}
-                </>
+                </div>
             )}
         </>
     );

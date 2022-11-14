@@ -3,12 +3,18 @@ import { useState, useEffect } from "react";
 import DeleteCard from "./DeleteCard";
 import Comments from "./Comments";
 import AddComment from "./AddComment";
+import MoveCard from "./MoveCard";
 
 interface CardProps {
     card: Card;
     toggleCard: () => void;
     deleteCard: (cardId: string) => void;
     stackName: string | null;
+    updateStacks: (
+        cardId: string | undefined,
+        oldStackId: string | undefined,
+        newStackId: string | undefined
+    ) => void;
 }
 
 const CardView: React.FC<CardProps> = ({
@@ -16,6 +22,7 @@ const CardView: React.FC<CardProps> = ({
     toggleCard,
     deleteCard,
     stackName,
+    updateStacks,
 }) => {
     const [showOptions, setShowOptions] = useState(false);
     const [comments, setComments] = useState<
@@ -74,13 +81,14 @@ const CardView: React.FC<CardProps> = ({
             </div>
             {showOptions && (
                 <div className="options-view">
-                    <p>edit</p>
-                    <p>add checklist</p>
-                    <p>add deadline</p>
-                    <p>attach link</p>
-                    <p>add members (search)</p>
-                    <p>archive</p>
-                    <p>delete</p>
+                    <button onClick={toggleOptions}>x</button>
+                    <MoveCard
+                        updateStacks={updateStacks}
+                        card={card}
+                        stackName={stackName}
+                        toggleOptions={toggleOptions}
+                        toggleCard={toggleCard}
+                    />
                     <DeleteCard cardId={card.id} deleteCard={deleteCard} />
                 </div>
             )}

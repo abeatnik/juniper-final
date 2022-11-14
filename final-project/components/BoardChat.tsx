@@ -14,20 +14,23 @@ const BoardChat = () => {
         (Message & { user: User })[] | null
     >(null);
     const boardId = router.asPath.split("/")[2];
+    const [expanded, setExpanded] = useState(false);
+
+    useEffect(() => {
+        getMessages();
+    }, []);
 
     useEffect(() => {
         initSocket();
-        getMessages();
-
         return () => {
-            socket && socket.disconnect();
+            // socket && socket.disconnect();
         };
-    }, []);
+    });
 
     const initSocket = async () => {
         console.log("initializing socket");
         await fetch("/api/socket");
-        socket = io();
+        socket = socket || io();
 
         socket.on("connect", () => {
             console.log("connected");
@@ -40,7 +43,7 @@ const BoardChat = () => {
         });
 
         socket.on("welcome", () => {
-            console.log("hurray");
+            console.log("hurray", socket.id);
         });
 
         socket.on("disconnect", () => {
@@ -60,18 +63,43 @@ const BoardChat = () => {
     };
 
     const addNewMessage = (message: Message & { user: User }) => {
+        console.log(message);
         console.log(socket);
+        console.log("message sent", socket.id);
+        socket.emit("hello", message);
         socket.emit("newMessage", boardId, message);
     };
 
     return (
-        <div className="chat-container">
-            <h2>Chat</h2>
-            <div className="message-container">
-                <ChatMessages messages={messages} />
-                <AddMessage addNewMessage={addNewMessage} boardId={boardId} />
-            </div>
-        </div>
+        <>
+            {!expanded && (
+                <button id="chat-button" onClick={() => setExpanded(true)}>
+                    Chat
+                </button>
+            )}
+            {expanded && (
+                <div className="chat-container">
+                    <h2>Chat</h2>
+                    <span>
+                        {" "}
+                        <button
+                            onClick={() => {
+                                setExpanded(false);
+                            }}
+                        >
+                            x
+                        </button>
+                    </span>
+                    <div className="message-container">
+                        <ChatMessages messages={messages} />
+                        <AddMessage
+                            addNewMessage={addNewMessage}
+                            boardId={boardId}
+                        />
+                    </div>
+                </div>
+            )}
+        </>
     );
 };
 

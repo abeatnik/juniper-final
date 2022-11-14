@@ -14,17 +14,26 @@ const socketHandler = async (
 
         io.on("connection", (socket) => {
             socket.emit("welcome");
+            console.log(socket.id);
 
             socket.on("room", (room) => {
                 console.log("socket connected");
                 console.log(`${socket.id} joined room: ${room}`);
                 socket.join(room);
             });
-        });
 
-        io.on("newMessage", (boardId, message) => {
-            console.log("newMessage!");
-            io.in(`room-${boardId}`).emit("receiveMessage", message);
+            socket.on("hello", (message) => {
+                console.log("yay", message);
+            });
+
+            socket.on("newMessage", (boardId, message) => {
+                console.log("newMessage!");
+                io.in(`room-${boardId}`).emit("receiveMessage", message);
+            });
+
+            socket.on("disconnect", () => {
+                console.log(`${socket.id} is disconnecting`);
+            });
         });
     }
     console.log(Array.from(res.socket.server.io.sockets.sockets));

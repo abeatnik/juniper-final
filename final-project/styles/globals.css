@@ -18,16 +18,93 @@ ul {
     list-style-type: none;
 }
 
+button {
+    width: 20vh;
+    height: 6vh;
+    border-radius: 3em 3em;
+    border: 1px solid black;
+    text-align: center;
+    line-height: 6vh;
+    background-size: 160%;
+    background-position: 60% 40%;
+    transition: transform 0.2s ease-in-out;
+}
+
+button:hover {
+    background-image: url("../public/yellow.jpg");
+    transform: scale(1.04);
+}
+
 .nav-bar {
     height: 10vh;
     display: flex;
     align-items: center;
-    justify-content: flex-end;
+    justify-content: space-between;
     padding-right: 5vw;
+    border-bottom: 1px solid black;
+}
+
+.nav-bar .left {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.nav-bar .right {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .nav-bar button {
     margin-left: 1vw;
+}
+
+.nav-bar .profile-pic {
+    margin-left: 4vh;
+    width: 8vh;
+    height: 8vh;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 1px solid black;
+}
+
+.nav-bar .profile-pic img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.nav-bar .member-pic {
+    width: 5vh;
+    height: 5vh;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 1px solid black;
+}
+
+.nav-bar .member-pic img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.nav-bar .board-title {
+    margin-left: 10vh;
+    font-size: 1.6em;
+}
+
+.nav-popup {
+    position: absolute;
+    top: 10vh;
+    right: 30vh;
+    background-color: white;
+    width: 20vw;
+    min-height: 20vh;
+    padding: 2vh;
+    border: 1px solid black;
+    display: flex;
+    flex-direction: column;
 }
 
 .home {
@@ -35,6 +112,7 @@ ul {
 
 .main-app {
     width: 100vw;
+    padding: 5vh;
     overflow-x: hidden;
 }
 
@@ -42,26 +120,95 @@ ul {
     padding: 4vh;
 }
 
-.stack-container {
-    width: 60vw;
-    height: 60vh;
+.stacks-container {
+    width: 80vw;
+    min-height: 60vh;
+}
+
+.stacks-container .stacks {
+    width: 100%;
+    height: 100%;
+    padding: 10vh;
     display: flex;
     justify-content: space-between;
     overflow-x: scroll;
+    background-color: white;
+    border: 2px solid red;
 }
 
-.stack-container .stack {
-    border: 1px solid black;
+.stacks-container .stack {
     padding: 2vh;
     width: 20vw;
     min-height: 40vh;
+    border: 2px solid green;
+}
+
+.stacks-container .card {
+    border: 2px solid blue;
+}
+
+.card-background {
+    left: 0;
+    top: 0;
+    position: absolute;
+    width: 100vw;
+    overflow-x: hidden;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    background-color: rgba(209, 209, 209, 0.8);
+}
+
+.card-view {
+    margin-top: 14vh;
+    padding: 4vh;
+    background-color: white;
+    border: 1px solid black;
+}
+
+.card-view .comment .user-pic {
+    width: 5vh;
+    height: 5vh;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 1px solid black;
+}
+
+.card-view .comment .user-pic img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.options-view {
+    padding: 4vh;
+    margin-left: 2vh;
+    background-color: white;
+    border: 1px solid black;
+    display: flex;
+    flex-direction: column;
+}
+
+.options-view > button {
+    margin-bottom: 2vh;
+}
+
+#chat-button {
+    position: absolute;
+    left: 87vw;
+    top: 20vh;
 }
 
 .chat-container {
     position: absolute;
-    left: 70vw;
-    top: 20vh;
+    right: 0;
+    top: 10vh;
+    padding: 2vh;
+    padding-top: 10vh;
+    border-left: 1px solid black;
     width: 25vw;
+    background-color: rgba(209, 209, 209, 0.8);
+    transition: all 0.3 ease-in-out;
 }
 
 .chat-container ul {
