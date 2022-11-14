@@ -59,10 +59,16 @@ const CardView: React.FC<CardProps> = ({
                 className="card-view"
                 onClick={() => showOptions && setShowOptions(false)}
             >
-                <div>
+                <div className="top">
                     <h2>{card.title}</h2>
-                    <button onClick={toggleCard}>x</button>
-                    <button onClick={toggleOptions}>...</button>
+                    <div>
+                        <button className="nav-button" onClick={toggleCard}>
+                            x
+                        </button>
+                        <button className="nav-button" onClick={toggleOptions}>
+                            ...
+                        </button>
+                    </div>
                 </div>
                 <p>{`from: ${stackName}`}</p>
                 <p>{`created at ${new Date(card.createdAt).toUTCString()}`}</p>
@@ -81,7 +87,9 @@ const CardView: React.FC<CardProps> = ({
             </div>
             {showOptions && (
                 <div className="options-view">
-                    <button onClick={toggleOptions}>x</button>
+                    <button className="nav-button" onClick={toggleOptions}>
+                        x
+                    </button>
                     <MoveCard
                         updateStacks={updateStacks}
                         card={card}

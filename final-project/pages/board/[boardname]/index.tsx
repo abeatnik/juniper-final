@@ -118,11 +118,11 @@ const Board: React.FC<BoardProps> = (props: BoardProps) => {
             </div>
             <div className="main-app">
                 <div className="board-container">
-                    <div className="board-info">
+                    {/* <div className="board-info">
                         <p>{`Welcome to your board, ${
                             session?.user && session.user.name
                         }`}</p>
-                    </div>
+                    </div> */}
                     <div className="stacks-container">
                         <StacksComponent
                             stackData={props.stackData}

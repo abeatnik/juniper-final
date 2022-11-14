@@ -58,7 +58,9 @@ const JoinBoard = () => {
                             <Link href={url}>{boardName}</Link>
                         </p>
                     )}
-                    <button onClick={togglePopup}>x</button>
+                    <button className="nav-button" onClick={togglePopup}>
+                        x
+                    </button>
                 </div>
             )}
         </>

@@ -40,13 +40,13 @@ const Members: React.FC<{ boardId: string }> = ({ boardId }) => {
                         setHidden(false);
                     }}
                 >
-                    {" "}
                     Members
                 </button>
             )}
             {!hidden && (
                 <div className="nav-popup">
                     <button
+                        className="nav-button"
                         onClick={() => {
                             setHidden(true);
                         }}

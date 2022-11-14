@@ -81,6 +81,7 @@ const BoardChat = () => {
                 <div className="chat-container">
                     <span>
                         <button
+                            className="nav-button"
                             onClick={() => {
                                 setExpanded(false);
                             }}

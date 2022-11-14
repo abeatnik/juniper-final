@@ -38,12 +38,22 @@ const AddMember: React.FC<{ boardId: string | null }> = ({ boardId }) => {
                             <button onClick={generateInvite}>
                                 generate invite code
                             </button>
-                            <button onClick={togglePopup}>x</button>
+                            <button
+                                className="nav-button"
+                                onClick={togglePopup}
+                            >
+                                x
+                            </button>
                         </>
                     )}
                     {invite && (
                         <div className="input-group">
-                            <button onClick={togglePopup}>x</button>
+                            <button
+                                className="nav-button"
+                                onClick={togglePopup}
+                            >
+                                x
+                            </button>
                             <label htmlFor="invite-code"></label>
                             <input
                                 type="text"

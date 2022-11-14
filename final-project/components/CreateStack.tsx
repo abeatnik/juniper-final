@@ -35,22 +35,26 @@ const CreateStack: React.FC<CreateStackProps> = ({ boardId, addNewStack }) => {
 
     return (
         <>
-            <div className="add-stack-popup">
+            <div className="add-popup">
                 <form onSubmit={handleSubmit}>
-                    <input
-                        name="stackTitle"
-                        type="text"
-                        value={title}
-                        onChange={(e) => setTitle(e.target.value)}
-                        required
-                    />
-                    <button type="submit">Create New Stack</button>
-                    <button
-                        className="add-item"
-                        onClick={() => setEditMode(!editMode)}
-                    >
-                        x
-                    </button>
+                    <div>
+                        <input
+                            name="stackTitle"
+                            type="text"
+                            value={title}
+                            onChange={(e) => setTitle(e.target.value)}
+                            required
+                        />
+                    </div>
+                    <div>
+                        <button type="submit">Create New Stack</button>
+                        <button
+                            className="nav-button"
+                            onClick={() => setEditMode(!editMode)}
+                        >
+                            x
+                        </button>
+                    </div>
                 </form>
             </div>
         </>

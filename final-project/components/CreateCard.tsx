@@ -41,30 +41,36 @@ const CreateCard: React.FC<CreateCardProps> = ({ stackId, addNewCard }) => {
 
     return (
         <>
-            <div className="add-card-popup">
+            <div className="add-popup">
                 <form onSubmit={handleSubmit}>
-                    <label htmlFor="cardTitle">Title: </label>
-                    <input
-                        name="cardTitle"
-                        type="text"
-                        value={title}
-                        onChange={(e) => setTitle(e.target.value)}
-                        required
-                    />
-                    <label htmlFor="cardDescription">Description: </label>
-                    <input
-                        name="cardDescription"
-                        type="text"
-                        value={description}
-                        onChange={(e) => setDescription(e.target.value)}
-                    />
-                    <button type="submit">Create New Card</button>
-                    <button
-                        className="add-item"
-                        onClick={() => setEditMode(!editMode)}
-                    >
-                        x
-                    </button>
+                    <div>
+                        <label htmlFor="cardTitle">Title: </label>
+                        <input
+                            name="cardTitle"
+                            type="text"
+                            value={title}
+                            onChange={(e) => setTitle(e.target.value)}
+                            required
+                        />
+                    </div>
+                    <div>
+                        <label htmlFor="cardDescription">Description: </label>
+                        <input
+                            name="cardDescription"
+                            type="text"
+                            value={description}
+                            onChange={(e) => setDescription(e.target.value)}
+                        />
+                    </div>
+                    <div>
+                        <button type="submit">Create New Card</button>
+                        <button
+                            className="nav-button"
+                            onClick={() => setEditMode(!editMode)}
+                        >
+                            x
+                        </button>
+                    </div>
                 </form>
             </div>
         </>
