@@ -2,6 +2,7 @@ import { Stack, Card } from "@prisma/client";
 import CreateStack from "./CreateStack";
 import SingleStackComponent from "./SingleStack";
 import { useState, useEffect } from "react";
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
 interface StackProps {
     stackData: (Stack & { cards: Card[] })[] | null;
@@ -23,23 +24,31 @@ const StacksComponent: React.FC<StackProps> = (props: StackProps) => {
 
     const showStacks =
         allStacks &&
-        allStacks.map((stack) => {
+        allStacks.map((stack, index) => {
             return (
-                <div key={stack.id}>
-                    <SingleStackComponent stack={stack} />
-                </div>
+                <Draggable key={stack.id} draggableId={stack.id} index={index}>
+                    {(provided) => (
+                        <li
+                            ref={provided.innerRef}
+                            {...provided.draggableProps}
+                            {...provided.dragHandleProps}
+                        >
+                            <SingleStackComponent stack={stack} />
+                        </li>
+                    )}
+                </Draggable>
             );
         });
 
     return (
         <>
-            <div className="stack-container">
+            <>
                 {showStacks}
                 <CreateStack
                     addNewStack={addNewStack}
                     boardId={props.boardId}
                 />
-            </div>
+            </>
         </>
     );
 };

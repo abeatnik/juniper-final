@@ -44,6 +44,7 @@ ul {
 
 .stack-container {
     width: 60vw;
+    height: 60vh;
     display: flex;
     justify-content: space-between;
     overflow-x: scroll;
@@ -53,6 +54,7 @@ ul {
     border: 1px solid black;
     padding: 2vh;
     width: 20vw;
+    min-height: 40vh;
 }
 
 .chat-container {

@@ -10,8 +10,12 @@ import BoardChat from "../../../components/BoardChat";
 import LoginLogout from "../../../components/LoginLogout";
 import JoinBoard from "../../../components/JoinBoard";
 import HomeButton from "../../../components/HomeButton";
+import { DragDropContext, Droppable } from "react-beautiful-dnd";
+import { resetServerContext } from "react-beautiful-dnd";
+import { useState, useEffect } from "react";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
+    resetServerContext();
     const { boardname } = context.query;
 
     const boardId = typeof boardname === "string" ? boardname : undefined;
@@ -65,39 +69,69 @@ interface BoardProps {
 }
 
 const Board: React.FC<BoardProps> = (props: BoardProps) => {
+    const [isBrowser, setIsBrowser] = useState(false);
     const { data: session, status } = useSession();
     const userEmail = session?.user && session?.user.email;
     const currentUser =
         props.currentBoard &&
         props.currentBoard.users.find((user) => user.email === userEmail);
 
+    useEffect(() => {
+        setIsBrowser(process.browser);
+    }, []);
+
     return (
         <>
-            <div className="nav-bar">
-                <HomeButton />
-                <AddMember
-                    boardId={props.currentBoard && props.currentBoard.id}
-                />
-                <JoinBoard />
-                <LoginLogout />
-            </div>
-            <div className="main-app">
-                <div className="board-container">
-                    <div className="board-info">
-                        <h1 className="board-title">
-                            {props.currentBoard && props.currentBoard.title}
-                        </h1>
-                        <p>{`Welcome to your board, ${
-                            session?.user && session.user.name
-                        }`}</p>
+            {isBrowser ? (
+                <DragDropContext
+                    onDragEnd={(result, provided) => {
+                        if (!result.destination) return;
+                    }}
+                >
+                    <div className="nav-bar">
+                        <HomeButton />
+                        <AddMember
+                            boardId={
+                                props.currentBoard && props.currentBoard.id
+                            }
+                        />
+                        <JoinBoard />
+                        <LoginLogout />
                     </div>
-                    <StacksComponent
-                        stackData={props.stackData}
-                        boardId={props.currentBoard && props.currentBoard.id}
-                    />
-                    <BoardChat />
-                </div>
-            </div>
+                    <div className="main-app">
+                        <div className="board-container">
+                            <div className="board-info">
+                                <h1 className="board-title">
+                                    {props.currentBoard &&
+                                        props.currentBoard.title}
+                                </h1>
+                                <p>{`Welcome to your board, ${
+                                    session?.user && session.user.name
+                                }`}</p>
+                            </div>
+
+                            <Droppable droppableId="board">
+                                {(provided) => (
+                                    <ul
+                                        className="stack-container"
+                                        {...provided.droppableProps}
+                                        ref={provided.innerRef}
+                                    >
+                                        <StacksComponent
+                                            stackData={props.stackData}
+                                            boardId={
+                                                props.currentBoard &&
+                                                props.currentBoard.id
+                                            }
+                                        />
+                                    </ul>
+                                )}
+                            </Droppable>
+                            <BoardChat />
+                        </div>
+                    </div>
+                </DragDropContext>
+            ) : null}
         </>
     );
 };

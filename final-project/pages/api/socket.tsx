@@ -13,8 +13,10 @@ const socketHandler = async (
         res.socket.server.io = io;
 
         io.on("connection", (socket) => {
-            console.log("socket connected");
+            socket.emit("welcome");
+
             socket.on("room", (room) => {
+                console.log("socket connected");
                 console.log(`${socket.id} joined room: ${room}`);
                 socket.join(room);
             });

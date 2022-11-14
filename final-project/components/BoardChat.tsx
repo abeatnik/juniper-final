@@ -14,12 +14,13 @@ const BoardChat = () => {
         (Message & { user: User })[] | null
     >(null);
     const boardId = router.asPath.split("/")[2];
+
     useEffect(() => {
         initSocket();
         getMessages();
 
         return () => {
-            // socket && socket.disconnect();
+            socket && socket.disconnect();
         };
     }, []);
 
@@ -40,6 +41,11 @@ const BoardChat = () => {
 
         socket.on("welcome", () => {
             console.log("hurray");
+        });
+
+        socket.on("disconnect", () => {
+            console.log("disconnected");
+            setConnected(false);
         });
 
         return socket;
