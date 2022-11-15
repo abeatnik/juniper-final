@@ -69,12 +69,15 @@ const MoveCard: React.FC<MoveCardProps> = ({
 
     return (
         <>
-            <button className="nav-button" onClick={() => setHidden(!hidden)}>
-                move card
-            </button>
+            <button onClick={() => setHidden(!hidden)}>move card</button>
             {!hidden && (
-                <div className="popup">
-                    <button onClick={() => setHidden(true)}>x</button>
+                <div className="move-popup">
+                    <button
+                        className="nav-button"
+                        onClick={() => setHidden(true)}
+                    >
+                        x
+                    </button>
                     {showStacks}
                 </div>
             )}

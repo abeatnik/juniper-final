@@ -1,6 +1,6 @@
 * {
     box-sizing: border-box;
-    font-family: Ranade-Regular;
+    font-family: Ranade-Thin;
 }
 
 html,
@@ -13,6 +13,12 @@ body {
 
 a {
     color: inherit;
+    text-decoration: none;
+}
+
+p {
+    margin-block-start: 0;
+    margin-block-end: 0;
 }
 
 ul {
@@ -50,12 +56,15 @@ button:hover {
 }
 
 .nav-bar {
-    height: 10vh;
+    padding-top: 2vh;
+    padding: bottom 2vh;
+    height: 12vh;
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding-right: 5vw;
     border-bottom: 1px solid black;
+    box-shadow: 2px 2px 40px rgba(0, 0, 0, 0.1);
 }
 
 .nav-bar .left {
@@ -81,6 +90,7 @@ button:hover {
     border-radius: 50%;
     overflow: hidden;
     border: 1px solid black;
+    flex-shrink: 0;
 }
 
 .nav-bar .profile-pic img {
@@ -105,12 +115,12 @@ button:hover {
 
 .nav-bar .board-title {
     margin-left: 10vh;
-    font-size: 1.6em;
+    font-size: 1.2em;
 }
 
 .nav-popup {
     position: absolute;
-    top: 10vh;
+    top: 11.9vh;
     right: 30vh;
     background-color: white;
     width: 20vw;
@@ -128,6 +138,42 @@ button:hover {
     width: 100vw;
     padding: 5vh;
     overflow-x: hidden;
+}
+
+.board-list {
+    margin-top: 8vh;
+    margin-left: 4vh;
+}
+
+.board-list li {
+    display: flex;
+    align-items: baseline;
+}
+
+.board-list li h2 {
+    text-decoration: none;
+    margin-right: 2vh;
+}
+
+.home .nav-button {
+    margin-left: 4vh;
+}
+
+.add-board-popup {
+    margin-left: 4vh;
+}
+
+.add-board-popup form {
+    margin-top: 8vh;
+    width: 40vw;
+    display: flex;
+    justify-content: space-between;
+}
+
+.add-board-popup form input {
+    width: 20vw;
+    padding: 2vh;
+    font-size: 1.1em;
 }
 
 .board-container {
@@ -151,9 +197,9 @@ button:hover {
 }
 
 .stacks-container .stack {
-    flex-shrink: 1;
+    flex-shrink: 0;
     padding: 2vh;
-    width: 24vw;
+    min-width: 24vw;
     min-height: 40vh;
     margin-right: 4vh;
     border: 1px solid black;
@@ -162,7 +208,7 @@ button:hover {
 }
 
 .stacks-container .stack h2 {
-    font-size: 1.2em;
+    font-size: 1em;
     margin-left: 2vh;
     color: rgb(88, 88, 88);
     text-transform: uppercase;
@@ -177,11 +223,24 @@ button:hover {
     margin-left: 4vh;
 }
 
+.add-popup form {
+    padding: 2vh;
+    border: 1px solid black;
+}
+
 .add-popup form > div {
     display: flex;
     justify-content: space-between;
     margin-top: 1vh;
     margin-bottom: 1vh;
+}
+
+.add-popup label {
+    margin-right: 2vh;
+}
+
+.add-popup input {
+    height: 4vh;
 }
 
 .stacks-container .card {
@@ -219,6 +278,7 @@ button:hover {
 .card-view .top {
     display: flex;
     justify-content: space-between;
+    margin-bottom: 2vh;
 }
 
 .nav-button {
@@ -234,12 +294,41 @@ button:hover {
     border: 1px solid black;
 }
 
+.card-view .card-container {
+    padding: 2vh;
+    border: 1px solid black;
+}
+
+.card-view .card-container > p {
+    font-size: 0.9em;
+}
+
+.card-view .description h4 {
+    margin-bottom: 0.2vh;
+}
+
+.card-view .description p {
+    padding: 2vh;
+    border: 1px solid black;
+}
+
+.card-view .card-container:first-child {
+    font-family: Ranade-ThinItalic;
+}
+
+.card-view .comments {
+    padding: 2vh;
+    border: 1px solid black;
+    margin-top: 7vh;
+}
+
 .card-view .comment .user-pic {
     width: 5vh;
     height: 5vh;
     border-radius: 50%;
     overflow: hidden;
     border: 1px solid black;
+    align-self: center;
 }
 
 .card-view .comment .user-pic img {
@@ -248,8 +337,55 @@ button:hover {
     object-fit: cover;
 }
 
+.card-view .comment {
+    display: flex;
+    padding: 1vh 2vh;
+    border: 1px solid black;
+    margin-top: 2vh;
+}
+
+.card-view .comment .content {
+    margin-left: 2vh;
+}
+
+.card-view .comment .content span {
+    font-size: 0.8em;
+}
+
+.card-view .comment .content:first-child {
+    font-family: Ranade-Bold;
+    margin-top: 6vh;
+}
+.card-view .comment .content:last-child {
+    line-height: normal;
+    text-align: justify;
+}
+
+.card-view .popup form {
+    display: flex;
+    flex-direction: column;
+}
+
+.card-view .popup form textarea {
+    min-height: 8vh;
+    resize: none;
+}
+
+.card-view .popup form .buttons {
+    margin-top: 2vh;
+    display: flex;
+    justify-content: space-between;
+}
+
+.card-view h4 {
+    text-transform: uppercase;
+    font-size: 0.9em;
+    margin-top: 4vh;
+}
+
 .options-view {
     margin-top: 14vh;
+    width: 17vw;
     padding: 4vh;
     margin-left: 2vh;
     height: 40vh;
@@ -263,6 +399,23 @@ button:hover {
     margin-bottom: 2vh;
 }
 
+.options-view .move-popup {
+    position: absolute;
+    top: 56vh;
+    background-color: white;
+    border: 1px solid black;
+    padding: 2vh;
+    width: 17vw;
+    margin-left: -4vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.options-view .move-popup button {
+    margin-bottom: 2vh;
+    margin-left: 2vh;
+}
+
 #chat-button {
     position: absolute;
     left: 87vw;
@@ -272,13 +425,13 @@ button:hover {
 .chat-container {
     position: absolute;
     right: 0;
-    top: 10vh;
+    top: 12vh;
     padding: 2vh;
     padding-top: 12vh;
     border-left: 1px solid black;
     width: 27vw;
     min-height: 90vh;
-    background-color: rgb(209, 209, 209);
+    background-color: rgb(228, 228, 228);
     transition: all 0.3 ease-in-out;
     box-shadow: 2px 2px 40px rgba(0, 0, 0, 0.06),
         -2px -2px 40px rgba(0, 0, 0, 0.06);
@@ -304,7 +457,9 @@ button:hover {
     width: 5vh;
     border-radius: 50%;
     overflow: hidden;
-    align-self: flex-start;
+    align-self: center;
+    margin-right: 2vh;
+    flex-shrink: 0;
 }
 
 .chat-container img {
@@ -316,6 +471,18 @@ button:hover {
 .chat-container li > .message-content {
     align-self: flex-start;
     border-radius: 2vh;
+    padding: 2vh;
+    border: 1px solid black;
+    margin-top: 2vh;
+    width: 82%;
+}
+
+.chat-container li > .message-content p {
+    font-size: 0.85em;
+}
+
+.chat-container li > .message-content .date {
+    font-size: 0.8em;
 }
 
 .chat-container .message-container {
@@ -327,6 +494,7 @@ button:hover {
 
 .chat-container .message-container .buttons {
     display: flex;
+    justify-content: space-around;
 }
 
 .chat-container textarea {
@@ -360,6 +528,25 @@ button:hover {
     font-weight: 100;
     font-display: swap;
     font-style: normal;
+}
+
+@font-face {
+    font-family: Ranade-ThinItalic;
+    src: url("../public/Ranade-ThinItalic.otf");
+    font-weight: 100;
+    font-display: swap;
+    font-style: normal;
+}
+
+@media only screen and (max-width: 600px) {
+    .stacks-container .stacks {
+        flex-direction: column;
+        width: 98vw;
+    }
+
+    .stacks-container .stack {
+        widtb: 80vw;
+    }
 }
 
 /* @media (prefers-color-scheme: dark) {

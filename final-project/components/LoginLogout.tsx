@@ -14,12 +14,18 @@ const LoginLogout: React.FC = () => {
         return <button onClick={() => signIn()}>Login</button>;
     } else {
         return (
-            <button
-                onClick={() => {
-                    signOut();
-                }}
-            >
-                Logout
+            <button>
+                <Link
+                    href="/"
+                    onClick={() => {
+                        setTimeout(() => {
+                            router.push("/");
+                            signOut();
+                        }, 100);
+                    }}
+                >
+                    Logout
+                </Link>
             </button>
         );
     }

@@ -38,10 +38,12 @@ const AddComment: React.FC<AddCommentProps> = ({ cardId, addNewComment }) => {
                         onChange={(e) => setText(e.target.value)}
                         required
                     />
-                    <button type="submit">Send</button>
-                    <button className="close" onClick={() => setText("")}>
-                        Cancel
-                    </button>
+                    <div className="buttons">
+                        <button type="submit">Send</button>
+                        <button className="close" onClick={() => setText("")}>
+                            Reset
+                        </button>
+                    </div>
                 </form>
             </div>
         </>

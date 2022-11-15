@@ -70,18 +70,24 @@ const CardView: React.FC<CardProps> = ({
                         </button>
                     </div>
                 </div>
-                <p>{`from: ${stackName}`}</p>
-                <p>{`created at ${new Date(card.createdAt).toUTCString()}`}</p>
-                <div className="description">
-                    <h4>Description</h4>
-                    <p>{card.description}</p>
+                <div className="card-container">
+                    <div className="info">
+                        <p>{`from: ${stackName}`}</p>
+                        <p>{`created at ${new Date(
+                            card.createdAt
+                        ).toUTCString()}`}</p>
+                    </div>
+                    <div className="description">
+                        <h4>Description</h4>
+                        <p>{card.description}</p>
+                    </div>
                 </div>
                 <div className="comments">
-                    <h4>Comments</h4>
                     <AddComment
                         cardId={card.id}
                         addNewComment={addNewComment}
                     />
+                    <h4>Comments</h4>
                     <Comments comments={comments && comments} />
                 </div>
             </div>

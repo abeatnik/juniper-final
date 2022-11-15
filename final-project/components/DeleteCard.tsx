@@ -36,7 +36,7 @@ const DeleteCard: React.FC<DeleteCardProps> = ({ cardId, deleteCard }) => {
             </button>
             {showPopup && (
                 <div className="module-background">
-                    <div className="module-container">
+                    <div className="move-popup">
                         <p>Delete this card?</p>
                         <button onClick={handleDelete}>Yes</button>
                         <button onClick={togglePopup}>Cancel</button>

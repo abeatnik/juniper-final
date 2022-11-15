@@ -9,6 +9,7 @@ import Link from "next/link";
 import { useSession } from "next-auth/react";
 import LoginLogout from "../components/LoginLogout";
 import JoinBoard from "../components/JoinBoard";
+import HomeButton from "../components/HomeButton";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
     const session = await unstable_getServerSession(
@@ -56,7 +57,9 @@ const Home: React.FC<HomeProps> = (props: HomeProps) => {
         userBoards &&
         userBoards.map((board) => (
             <li key={board.id}>
-                <Link href={`/board/${board.id}`}>{board.title}</Link>
+                <Link href={`/board/${board.id}`}>
+                    <h2>{board.title}</h2>
+                </Link>
                 <p>
                     {"created on " + new Date(board.createdAt).toDateString()}
                 </p>
@@ -65,7 +68,30 @@ const Home: React.FC<HomeProps> = (props: HomeProps) => {
     return (
         <>
             <div className="nav-bar">
-                {status === "authenticated" && <JoinBoard />}
+                <div className="left">
+                    {status === "authenticated" && (
+                        <>
+                            <div className="profile-pic">
+                                <img
+                                    src={
+                                        (session?.user && session.user.image) ||
+                                        undefined
+                                    }
+                                    alt={
+                                        (session?.user && session.user.name) ||
+                                        undefined
+                                    }
+                                />
+                            </div>
+                            <HomeButton
+                                email={session?.user && session.user.email}
+                                name={session?.user && session.user.name}
+                            />
+                            <JoinBoard />
+                        </>
+                    )}
+                </div>
+
                 <LoginLogout />
             </div>
             <div className="main-app">

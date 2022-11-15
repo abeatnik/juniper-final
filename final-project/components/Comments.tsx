@@ -12,9 +12,18 @@ const Comments: React.FC<{
                     <div className="user-pic">
                         <img src={comment.user.image || undefined} alt="" />
                     </div>
-                    <p>{comment.user.name || undefined}</p>
-                    <p>{new Date(comment.user.createdAt).toUTCString()}</p>
-                    <p>{comment.text}</p>
+                    <div className="content">
+                        <p>
+                            {comment.user.name || undefined}
+                            <span>
+                                {" on " +
+                                    new Date(
+                                        comment.user.createdAt
+                                    ).toUTCString()}
+                            </span>
+                        </p>
+                        <p>{comment.text}</p>
+                    </div>
                 </li>
             );
         });

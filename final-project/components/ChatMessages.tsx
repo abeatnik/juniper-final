@@ -27,7 +27,9 @@ const ChatMessages: React.FC<{
                     </div>
                     <div className="message-content">
                         <p>{message.user.name || undefined}</p>
-                        <p>{new Date(message.user.createdAt).toUTCString()}</p>
+                        <p className="date">
+                            {new Date(message.user.createdAt).toUTCString()}
+                        </p>
                         <p>{message.text}</p>
                     </div>
                 </li>

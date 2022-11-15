@@ -26,7 +26,10 @@ const CreateBoard: React.FC<{ addNewBoard: (board: Board) => void }> = ({
 
     if (!editMode) {
         return (
-            <button className="add-item" onClick={() => setEditMode(!editMode)}>
+            <button
+                className="nav-button"
+                onClick={() => setEditMode(!editMode)}
+            >
                 +
             </button>
         );
@@ -44,7 +47,7 @@ const CreateBoard: React.FC<{ addNewBoard: (board: Board) => void }> = ({
                     />
                     <button type="submit">Create New Board</button>
                     <button
-                        className="add-item"
+                        className="nav-button"
                         onClick={() => setEditMode(!editMode)}
                     >
                         x
