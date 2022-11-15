@@ -11,10 +11,14 @@ const LoginLogout: React.FC = () => {
         router.pathname === pathname;
     let right;
     if (!session) {
-        return <button onClick={() => signIn()}>Login</button>;
+        return (
+            <button id="login-button" onClick={() => signIn()}>
+                Login
+            </button>
+        );
     } else {
         return (
-            <button>
+            <button id="logout-button">
                 <Link
                     href="/"
                     onClick={() => {

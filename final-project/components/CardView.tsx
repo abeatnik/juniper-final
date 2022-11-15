@@ -59,36 +59,41 @@ const CardView: React.FC<CardProps> = ({
                 className="card-view"
                 onClick={() => showOptions && setShowOptions(false)}
             >
-                <div className="top">
-                    <h2>{card.title}</h2>
-                    <div>
-                        <button className="nav-button" onClick={toggleCard}>
-                            x
-                        </button>
-                        <button className="nav-button" onClick={toggleOptions}>
-                            ...
-                        </button>
+                <div className="scroll-box">
+                    <div className="top">
+                        <h2>{card.title}</h2>
+                        <div>
+                            <button className="nav-button" onClick={toggleCard}>
+                                x
+                            </button>
+                            <button
+                                className="nav-button"
+                                onClick={toggleOptions}
+                            >
+                                ...
+                            </button>
+                        </div>
                     </div>
-                </div>
-                <div className="card-container">
-                    <div className="info">
-                        <p>{`from: ${stackName}`}</p>
-                        <p>{`created at ${new Date(
-                            card.createdAt
-                        ).toUTCString()}`}</p>
+                    <div className="card-container">
+                        <div className="info">
+                            <p>{`from: ${stackName}`}</p>
+                            <p>{`created at ${new Date(
+                                card.createdAt
+                            ).toUTCString()}`}</p>
+                        </div>
+                        <div className="description">
+                            <h4>Description</h4>
+                            <p>{card.description}</p>
+                        </div>
                     </div>
-                    <div className="description">
-                        <h4>Description</h4>
-                        <p>{card.description}</p>
+                    <div className="comments">
+                        <AddComment
+                            cardId={card.id}
+                            addNewComment={addNewComment}
+                        />
+                        <h4>Comments</h4>
+                        <Comments comments={comments && comments} />
                     </div>
-                </div>
-                <div className="comments">
-                    <AddComment
-                        cardId={card.id}
-                        addNewComment={addNewComment}
-                    />
-                    <h4>Comments</h4>
-                    <Comments comments={comments && comments} />
                 </div>
             </div>
             {showOptions && (

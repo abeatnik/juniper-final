@@ -8,6 +8,7 @@ interface CardProps {
     cards: Card[] | [];
     stackName: string | null;
     deleteCard: (cardId: string) => void;
+    addNewCard: (card: Card) => void;
     updateStacks: (
         cardId: string | undefined,
         oldStackId: string | undefined,

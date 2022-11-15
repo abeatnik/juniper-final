@@ -34,15 +34,14 @@ const Members: React.FC<{ boardId: string }> = ({ boardId }) => {
 
     return (
         <>
-            {hidden && (
-                <button
-                    onClick={() => {
-                        setHidden(false);
-                    }}
-                >
-                    Members
-                </button>
-            )}
+            <button
+                id="members-button"
+                onClick={() => {
+                    setHidden(!hidden);
+                }}
+            >
+                Members
+            </button>
             {!hidden && (
                 <div className="nav-popup">
                     <button

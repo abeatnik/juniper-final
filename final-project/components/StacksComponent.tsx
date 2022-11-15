@@ -21,12 +21,19 @@ const StacksComponent: React.FC<StackProps> = (props: StackProps) => {
         props.stackData && setAllStacks(props.stackData);
     }, []);
 
-    // useEffect(() => {
-    //     renderStacks();
-    // }, [allStacks]);
-
     const addNewStack = (stack: Stack & { cards: Card[] }) => {
         allStacks && setAllStacks([...allStacks, stack]);
+    };
+
+    const addNewCard = (card: Card) => {
+        const cardStack = card.stackId;
+        const newStackState = allStacks?.map((stack) => {
+            if (stack.id === cardStack) {
+                stack.cards = stack.cards ? [...stack.cards, card] : [card];
+            }
+            return stack;
+        });
+        newStackState && setAllStacks(newStackState);
     };
 
     const updateStacks = (
@@ -61,10 +68,7 @@ const StacksComponent: React.FC<StackProps> = (props: StackProps) => {
             }
             return stack;
         });
-        console.log("changing all stacks to:", addCard);
-        // setAllStacks(null);
         addCard && setAllStacks([...addCard]);
-        console.log(allStacks);
     };
 
     const showStacks =
@@ -73,6 +77,7 @@ const StacksComponent: React.FC<StackProps> = (props: StackProps) => {
             return (
                 <div key={stack.id}>
                     <SingleStackComponent
+                        addNewCard={addNewCard}
                         stack={stack}
                         updateStacks={updateStacks}
                     />

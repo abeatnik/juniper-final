@@ -41,9 +41,50 @@ button {
     font-family: Ranade-Thin;
 }
 
-.nav-bar button:hover {
+#home-button {
+    overflow: scroll;
+}
+
+#home-button:hover {
     background-image: url("../public/yellow.jpg");
-    transform: scale(1.04);
+    transform: none;
+}
+
+#members-button:hover {
+    background-image: url("../public/light-green.jpg");
+    background-position: 0% 40%;
+    background-size: 140%;
+    transform: none;
+}
+
+#add-member-button:hover {
+    background-image: url("../public/olive.jpg");
+    background-position: 40% 0%;
+    background-size: 130%;
+    transform: none;
+}
+
+#join-board-button:hover {
+    background-image: url("../public/turquoise.jpg");
+    background-position: 40% 0%;
+    background-size: 130%;
+    transform: none;
+}
+
+#login-button:hover {
+    background-image: url("../public/yellow.jpg");
+    transform: none;
+}
+
+#logout-button:hover {
+    background-image: url("../public/dark-blue.jpg");
+    background-position: 40% 0%;
+    background-size: 130%;
+    transform: none;
+}
+
+#generate-code {
+    width: auto;
 }
 
 .nav-bar .nav-button:hover {
@@ -131,6 +172,23 @@ button:hover {
     flex-direction: column;
 }
 
+.nav-popup li {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 2vh;
+    align-items: center;
+}
+
+.nav-popup li p {
+    margin-top: 2vh;
+}
+
+.nav-popup p,
+.nav-popup input,
+.nav-popup button {
+    margin-bottom: 2vh;
+}
+
 .home {
 }
 
@@ -177,7 +235,10 @@ button:hover {
 }
 
 .board-container {
-    padding: 4vh;
+    width: 100vw;
+    margin-left: 1vw;
+    overflow-x: scroll;
+    padding: 2vh;
 }
 
 .stacks-container {
@@ -203,8 +264,12 @@ button:hover {
     min-height: 40vh;
     margin-right: 4vh;
     border: 1px solid black;
-    box-shadow: 2px 2px 40px rgba(0, 0, 0, 0.06),
-        -2px -2px 40px rgba(0, 0, 0, 0.06);
+    box-shadow: 2px 2px 40px rgba(0, 0, 0, 0.04),
+        -2px -2px 40px rgba(0, 0, 0, 0.04);
+}
+.stacks-container .stack:hover {
+    /* background-image: url("../public/painting-green.jpg");
+    background-size: 140%; */
 }
 
 .stacks-container .stack h2 {
@@ -244,6 +309,7 @@ button:hover {
 }
 
 .stacks-container .card {
+    background-color: white;
     border: 1px solid black;
     border-radius: 2vh;
     padding-right: 2vh;
@@ -251,6 +317,8 @@ button:hover {
     margin-bottom: 2vh;
     min-height: 6vh;
     height: auto;
+    box-shadow: 2px 2px 40px rgba(0, 0, 0, 0.06),
+        -2px -2px 40px rgba(0, 0, 0, 0.06);
 }
 .stacks-container .card h4 {
     margin-top: 1.6vh;
@@ -269,10 +337,20 @@ button:hover {
 }
 
 .card-view {
-    margin-top: 14vh;
-    padding: 4vh;
+    margin-top: 10vh;
+    height: 86vh;
+    width: 40vw;
+    padding: 2vh;
     background-color: white;
     border: 1px solid black;
+    box-shadow: 2px 2px 40px rgba(0, 0, 0, 0.08),
+        -2px -2px 40px rgba(0, 0, 0, 0.08);
+}
+
+.scroll-box {
+    padding: 2vh 0;
+    overflow: scroll;
+    height: 82vh;
 }
 
 .card-view .top {
@@ -297,6 +375,8 @@ button:hover {
 .card-view .card-container {
     padding: 2vh;
     border: 1px solid black;
+    box-shadow: 2px 2px 40px rgba(0, 0, 0, 0.06),
+        -2px -2px 40px rgba(0, 0, 0, 0.06);
 }
 
 .card-view .card-container > p {
@@ -418,23 +498,54 @@ button:hover {
 
 #chat-button {
     position: absolute;
-    left: 87vw;
-    top: 20vh;
+    padding: 2vh;
+    right: 7vw;
+    top: 16vh;
+    width: 8vh;
+    background-image: url("../public/chat1.svg");
+    background-repeat: no-repeat;
+    background-size: 60%;
+    background-position: 50%;
+    z-index: 1;
+}
+
+.notification {
+    position: absolute;
+    background-color: rgb(255, 63, 41);
+    right: 7vw;
+    top: 16vh;
+    width: 1.8vh;
+    height: 1.8vh;
+    border-radius: 50%;
+    z-index: 2;
+    border: 1px solid black;
+    box-shadow: -2px 0 5px white, 2px 1px 5px white, -1px 1px 5px white;
 }
 
 .chat-container {
     position: absolute;
+    background-image: url("../public/painting-green.jpg");
     right: 0;
     top: 12vh;
     padding: 2vh;
     padding-top: 12vh;
     border-left: 1px solid black;
+    border-bottom: 1px solid black;
     width: 27vw;
-    min-height: 90vh;
+    min-height: 88vh;
     background-color: rgb(228, 228, 228);
     transition: all 0.3 ease-in-out;
-    box-shadow: 2px 2px 40px rgba(0, 0, 0, 0.06),
-        -2px -2px 40px rgba(0, 0, 0, 0.06);
+    box-shadow: -2px 0px 40px rgba(0, 0, 0, 0.3);
+    /* animation: 0.6s ease-out 0s 1 slideIn forwards; */
+}
+
+@keyframes slideIn {
+    0% {
+        transform: translateX(100%);
+    }
+    100% {
+        transform: translateX(0);
+    }
 }
 
 .chat-container span {
@@ -444,7 +555,7 @@ button:hover {
 }
 
 .chat-container ul {
-    height: 54vh;
+    height: 52vh;
     overflow: scroll;
 }
 
@@ -475,6 +586,7 @@ button:hover {
     border: 1px solid black;
     margin-top: 2vh;
     width: 82%;
+    box-shadow: 2px 0px 40px rgba(0, 0, 0, 0.1);
 }
 
 .chat-container li > .message-content p {
@@ -490,6 +602,7 @@ button:hover {
     padding: 1vh;
     border: 1px solid black;
     border-radius: 2vh;
+    box-shadow: 0px 2px 40px rgba(0, 0, 0, 0.2);
 }
 
 .chat-container .message-container .buttons {
@@ -504,6 +617,49 @@ button:hover {
     padding: 1vh;
     margin-bottom: 2vh;
     margin-top: 0.6vh;
+}
+
+.welcome {
+    position: absolute;
+    top: 12vh;
+    left: 0;
+    width: 100vw;
+    height: 88vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.welcome .logo {
+    width: 45vw;
+    height: 30vw;
+    background-image: url("../public/welcome.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: appear 3s ease-in-out 0s 1 forwards;
+}
+
+@keyframes appear {
+    0% {
+        opacity: 0;
+    }
+    10% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.welcome .logo h1 {
+    color: white;
+    font-size: 3.6em;
+    margin-left: -6vw;
+    margin-top: 4vh;
 }
 
 @font-face {

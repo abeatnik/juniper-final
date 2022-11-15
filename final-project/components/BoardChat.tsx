@@ -10,6 +10,8 @@ let socket: Socket;
 const BoardChat = () => {
     const router = useRouter();
     const [connected, setConnected] = useState(false);
+    const [seen, setSeen] = useState(0);
+    const [notification, setNotification] = useState(false);
     const [messages, setMessages] = useState<
         (Message & { user: User })[] | null
     >(null);
@@ -40,6 +42,9 @@ const BoardChat = () => {
 
         socket.on("receiveMessage", (message: Message & { user: User }) => {
             setMessages(messages && [message, ...messages]);
+            if (messages && seen < messages.length) {
+                setNotification(true);
+            }
         });
 
         socket.on("welcome", () => {
@@ -63,22 +68,32 @@ const BoardChat = () => {
     };
 
     const addNewMessage = (message: Message & { user: User }) => {
-        console.log(message);
-        console.log(socket);
-        console.log("message sent", socket.id);
-        socket.emit("hello", message);
+        messages && setSeen(messages.length + 1);
         socket.emit("newMessage", boardId, message);
+    };
+
+    const activateChat = () => {
+        setExpanded(true);
+        setNotification(false);
+        messages && setSeen(messages.length);
     };
 
     return (
         <>
             {!expanded && (
-                <button id="chat-button" onClick={() => setExpanded(true)}>
-                    Chat
-                </button>
+                <>
+                    <button
+                        id="chat-button"
+                        onMouseEnter={activateChat}
+                    ></button>
+                    {notification && <div className="notification"></div>}
+                </>
             )}
             {expanded && (
-                <div className="chat-container">
+                <div
+                    className="chat-container"
+                    onMouseLeave={() => setExpanded(false)}
+                >
                     <span>
                         <button
                             className="nav-button"

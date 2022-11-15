@@ -10,6 +10,7 @@ import { useSession } from "next-auth/react";
 import LoginLogout from "../components/LoginLogout";
 import JoinBoard from "../components/JoinBoard";
 import HomeButton from "../components/HomeButton";
+import Welcome from "../components/Welcome";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
     const session = await unstable_getServerSession(
@@ -33,7 +34,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     });
 
     const data = userObj && userObj.boards;
-    const boards = JSON.parse(JSON.stringify(data));
+    const boards: Board[] = JSON.parse(JSON.stringify(data));
     return { props: { boards } };
 };
 
@@ -43,14 +44,16 @@ interface HomeProps {
 
 const Home: React.FC<HomeProps> = (props: HomeProps) => {
     const { data: session, status } = useSession();
-    const [userBoards, setUserBoards] = useState<Board[] | []>([]);
+    const [userBoards, setUserBoards] = useState<Board[]>([]);
 
     useEffect(() => {
-        setUserBoards(props.boards);
+        props.boards && setUserBoards(props.boards);
     }, []);
 
     const addNewBoard = (board: Board) => {
-        setUserBoards([...userBoards, board]);
+        userBoards
+            ? setUserBoards([...userBoards, board])
+            : setUserBoards([board]);
     };
 
     const boardList =
@@ -60,16 +63,19 @@ const Home: React.FC<HomeProps> = (props: HomeProps) => {
                 <Link href={`/board/${board.id}`}>
                     <h2>{board.title}</h2>
                 </Link>
-                <p>
-                    {"created on " + new Date(board.createdAt).toDateString()}
-                </p>
+                {board.title !== "Archive" && (
+                    <p>
+                        {"created on " +
+                            new Date(board.createdAt).toDateString()}
+                    </p>
+                )}
             </li>
         ));
     return (
         <>
-            <div className="nav-bar">
-                <div className="left">
-                    {status === "authenticated" && (
+            {status === "authenticated" && (
+                <div className="nav-bar">
+                    <div className="left">
                         <>
                             <div className="profile-pic">
                                 <img
@@ -87,13 +93,14 @@ const Home: React.FC<HomeProps> = (props: HomeProps) => {
                                 email={session?.user && session.user.email}
                                 name={session?.user && session.user.name}
                             />
-                            <JoinBoard />
                         </>
-                    )}
+                    </div>
+                    <div>
+                        <JoinBoard />
+                        <LoginLogout />
+                    </div>
                 </div>
-
-                <LoginLogout />
-            </div>
+            )}
             <div className="main-app">
                 <div className="home">
                     {status === "authenticated" && (
@@ -102,7 +109,11 @@ const Home: React.FC<HomeProps> = (props: HomeProps) => {
                             <CreateBoard addNewBoard={addNewBoard} />
                         </>
                     )}
-                    {status !== "authenticated" && <h1>Welcome</h1>}
+                    {status !== "authenticated" && (
+                        <>
+                            <LoginLogout /> <Welcome />
+                        </>
+                    )}
                 </div>
             </div>
         </>

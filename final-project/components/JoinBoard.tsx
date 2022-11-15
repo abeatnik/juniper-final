@@ -37,9 +37,14 @@ const JoinBoard = () => {
 
     return (
         <>
-            <button onClick={togglePopup}>Join Board</button>
+            <button id="join-board-button" onClick={togglePopup}>
+                Join Board
+            </button>
             {showPopup && (
                 <div className="nav-popup">
+                    <button className="nav-button" onClick={togglePopup}>
+                        x
+                    </button>
                     {!approved && (
                         <form onSubmit={handleSubmit}>
                             <p>insert invite code: </p>
@@ -58,9 +63,6 @@ const JoinBoard = () => {
                             <Link href={url}>{boardName}</Link>
                         </p>
                     )}
-                    <button className="nav-button" onClick={togglePopup}>
-                        x
-                    </button>
                 </div>
             )}
         </>

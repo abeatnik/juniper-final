@@ -9,7 +9,7 @@ const HomeButton: React.FC<{
     const [content, setContent] = useState(name);
 
     return (
-        <button>
+        <button id="home-button">
             <Link
                 href="/"
                 onMouseEnter={() => {
