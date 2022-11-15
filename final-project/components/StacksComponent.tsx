@@ -107,6 +107,32 @@ const StacksComponent: React.FC<StackProps> = (props: StackProps) => {
         const res = await update.json();
     };
 
+    const reshuffleCards = (
+        cardId: string,
+        stackId: string,
+        oldIndex: number,
+        newIndex: number
+    ) => {
+        const reshuffled = allStacks?.map((stack) => {
+            if (stack.id === stackId) {
+                const reshuffledCard = stack.cards.find(
+                    (card) => card.id === cardId
+                );
+                if (newIndex < oldIndex) {
+                    stack.cards.splice(oldIndex, 1);
+                    reshuffledCard &&
+                        stack.cards.splice(newIndex, 0, reshuffledCard);
+                } else {
+                    stack.cards.splice(oldIndex, 1);
+                    reshuffledCard &&
+                        stack.cards.splice(newIndex, 0, reshuffledCard);
+                }
+            }
+            return stack;
+        });
+        reshuffled && setAllStacks([...reshuffled]);
+    };
+
     const onDragEndHandler = (result: DropResult) => {
         const { draggableId, destination, source } = result;
         console.log(result);
@@ -123,6 +149,13 @@ const StacksComponent: React.FC<StackProps> = (props: StackProps) => {
                     draggableId,
                     source.droppableId,
                     destination.droppableId,
+                    destination.index
+                );
+            } else if (destination.index !== source.index) {
+                reshuffleCards(
+                    draggableId,
+                    source.droppableId,
+                    source.index,
                     destination.index
                 );
             }

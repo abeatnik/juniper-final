@@ -12,8 +12,12 @@ const AddMessage: React.FC<AddMessageProps> = ({ boardId, addNewMessage }) => {
     const { data: session, status } = useSession();
     const email = session?.user?.email;
 
-    const handleSubmit = async (e: FormEvent) => {
-        e.preventDefault();
+    const handleKeyDown = (e: React.KeyboardEvent) => {
+        e.key === "Enter" && handleSubmit(null);
+    };
+
+    const handleSubmit = async (e: FormEvent | null) => {
+        e && e.preventDefault();
         try {
             const res = await fetch("/api/create/message", {
                 method: "POST",
@@ -37,13 +41,12 @@ const AddMessage: React.FC<AddMessageProps> = ({ boardId, addNewMessage }) => {
                         value={text}
                         onChange={(e) => setText(e.target.value)}
                         required
+                        onKeyDown={handleKeyDown}
                     />
-                    <div className="buttons">
-                        <button type="submit">Send</button>
-                        <button className="close" onClick={() => setText("")}>
-                            Cancel
-                        </button>
-                    </div>
+                    <button type="submit">Send</button>
+                    <button className="close" onClick={() => setText("")}>
+                        Cancel
+                    </button>
                 </form>
             </div>
         </>

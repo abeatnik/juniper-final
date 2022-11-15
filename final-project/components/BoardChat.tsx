@@ -78,6 +78,11 @@ const BoardChat = () => {
         messages && setSeen(messages.length);
     };
 
+    const deactivateChat = () => {
+        setExpanded(false);
+        setNotification(false);
+    };
+
     return (
         <>
             {!expanded && (
@@ -90,10 +95,7 @@ const BoardChat = () => {
                 </>
             )}
             {expanded && (
-                <div
-                    className="chat-container"
-                    onMouseLeave={() => setExpanded(false)}
-                >
+                <div className="chat-container" onMouseLeave={deactivateChat}>
                     <span>
                         <button
                             className="nav-button"

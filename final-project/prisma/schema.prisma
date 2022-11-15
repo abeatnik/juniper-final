@@ -83,7 +83,7 @@ model Stack {
   createdAt DateTime @default(now()) @map(name: "created_at")
   updatedAt DateTime @updatedAt @map(name: "updated_at")
   title     String   @db.VarChar(255)
-  board     Board    @relation(fields: [boardId], references: [id])
+  board     Board    @relation(fields: [boardId], references: [id],  onDelete: Cascade)
   boardId   String   @db.Uuid
   cards     Card[]
 }

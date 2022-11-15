@@ -526,7 +526,7 @@ button:hover {
 
 .chat-container {
     position: absolute;
-    background-image: url("../public/painting-green.jpg");
+    /* background-image: url("../public/painting-green.jpg"); */
     right: 0;
     top: 12vh;
     padding: 2vh;
