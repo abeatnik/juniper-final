@@ -64,6 +64,7 @@ model User {
   boards    Board[]
   comments  Comment[]
   messages  Message[]
+  cards     Card[]
   @@map(name: "users")
 }
 
@@ -97,6 +98,8 @@ model Card {
   stack       Stack    @relation(fields: [stackId], references: [id])
   stackId     String   @db.Uuid
   comments    Comment[]
+  user        User?     @relation(fields: [userId], references: [id])
+  userId      String?  @db.Uuid
 }
 
 model Comment {

@@ -44,11 +44,14 @@ button {
 
 #home-button {
     overflow: scroll;
+    width: auto;
+    min-width: 20vh;
 }
 
 #home-button:hover {
     /* background-image: url("../public/yellow.jpg"); */
-    background-color: rgb(224, 224, 206);
+    /* background-color: rgb(224, 224, 206); */
+
     transform: none;
 }
 
@@ -149,7 +152,7 @@ button:hover {
     object-fit: cover;
 }
 
-.nav-bar .member-pic {
+.member-pic {
     width: 5vh;
     height: 5vh;
     border-radius: 50%;
@@ -157,7 +160,7 @@ button:hover {
     border: 1px solid black;
 }
 
-.nav-bar .member-pic img {
+.member-pic img {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -181,14 +184,16 @@ button:hover {
     flex-direction: column;
 }
 
-.nav-popup li {
+.nav-popup li,
+.move-popup li {
     display: flex;
     justify-content: space-around;
     margin-top: 2vh;
     align-items: center;
 }
 
-.nav-popup li p {
+.nav-popup li p,
+.move-popup li p {
     margin-top: 2vh;
 }
 
@@ -198,7 +203,13 @@ button:hover {
     margin-bottom: 2vh;
 }
 
-.home {
+button.user-info {
+    display: flex;
+    align-items: center;
+}
+
+button.user-info p {
+    margin-left: 2vh;
 }
 
 .main-app {
@@ -326,6 +337,9 @@ button:hover {
 }
 
 .stacks-container .card {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
     background-color: white;
     border: 1px solid black;
     border-radius: 2vh;
@@ -337,6 +351,14 @@ button:hover {
     box-shadow: 2px 2px 40px rgba(0, 0, 0, 0.06),
         -2px -2px 40px rgba(0, 0, 0, 0.06);
 }
+
+.stacks-container .card .user-icon .member-pic {
+    width: 3vh;
+    height: 3vh;
+    position: relative;
+    bottom: -0.5vh;
+}
+
 .stacks-container .card h4 {
     margin-top: 1.6vh;
 }
@@ -487,11 +509,11 @@ button:hover {
 }
 
 .options-view {
-    margin-top: 14vh;
+    margin-top: 10vh;
     width: 17vw;
     padding: 4vh;
     margin-left: 2vh;
-    height: 40vh;
+    height: 50vh;
     background-color: white;
     border: 1px solid black;
     display: flex;
@@ -504,7 +526,7 @@ button:hover {
 
 .options-view .move-popup {
     position: absolute;
-    top: 56vh;
+    top: 62vh;
     background-color: white;
     border: 1px solid black;
     padding: 2vh;
@@ -517,6 +539,10 @@ button:hover {
 .options-view .move-popup button {
     margin-bottom: 2vh;
     margin-left: 2vh;
+}
+
+.card-view .move-popup li {
+    cursor: pointer;
 }
 
 #chat-button {

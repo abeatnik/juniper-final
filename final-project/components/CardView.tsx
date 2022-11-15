@@ -4,6 +4,8 @@ import DeleteCard from "./DeleteCard";
 import Comments from "./Comments";
 import AddComment from "./AddComment";
 import MoveCard from "./MoveCard";
+import AssignCard from "./AssignCard";
+import UserIcon from "./UserIcon";
 
 interface CardProps {
     card: Card;
@@ -192,6 +194,11 @@ const CardView: React.FC<CardProps> = ({
                         toggleOptions={toggleOptions}
                         toggleCard={toggleCard}
                     />
+                    {card.userId ? (
+                        <UserIcon userId={card.userId} />
+                    ) : (
+                        <AssignCard cardId={card.id} />
+                    )}
                     <DeleteCard cardId={card.id} deleteCard={deleteCard} />
                 </div>
             )}
