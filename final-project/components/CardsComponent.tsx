@@ -8,7 +8,7 @@ interface CardProps {
     cards: Card[] | [];
     stackName: string | null;
     deleteCard: (cardId: string) => void;
-    addNewCard: (card: Card) => void;
+    stackId: string | null;
     updateStacks: (
         cardId: string | undefined,
         oldStackId: string | undefined,
@@ -17,35 +17,49 @@ interface CardProps {
 }
 
 const CardsComponent: React.FC<CardProps> = (props: CardProps) => {
-    const showCards =
-        props.cards &&
-        props.cards.map((card, index) => {
-            return (
-                <li key={card.id}>
-                    <SingleCard
-                        card={card}
-                        stackName={props.stackName}
-                        deleteCard={props.deleteCard}
-                        updateStacks={props.updateStacks}
-                    />
-                </li>
-            );
-        });
-
     return (
-        <>
-            {/* <Droppable droppableId={"stack-field"}>
-                {(provided) => ( */}
-            <ul
-                className={"stacklist " + props.stackName || ""}
-                // {...provided.droppableProps}
-                // ref={provided.innerRef}
-            >
-                {showCards}
-            </ul>
-            {/* )}
-            </Droppable> */}
-        </>
+        <Droppable droppableId={props.stackId || "droppable"}>
+            {(provided) => (
+                <>
+                    <div
+                        className={"stacklist id-" + props.stackId || ""}
+                        ref={provided.innerRef}
+                        {...provided.droppableProps}
+                    >
+                        {props.cards &&
+                            props.cards.map((card, index) => {
+                                return (
+                                    <Draggable
+                                        key={card.id}
+                                        draggableId={card.id}
+                                        index={index}
+                                    >
+                                        {(provided, snapshot) => (
+                                            <div
+                                                ref={provided.innerRef}
+                                                {...provided.draggableProps}
+                                                {...provided.dragHandleProps}
+                                            >
+                                                <SingleCard
+                                                    card={card}
+                                                    stackName={props.stackName}
+                                                    deleteCard={
+                                                        props.deleteCard
+                                                    }
+                                                    updateStacks={
+                                                        props.updateStacks
+                                                    }
+                                                />
+                                            </div>
+                                        )}
+                                    </Draggable>
+                                );
+                            })}
+                        {provided.placeholder}
+                    </div>
+                </>
+            )}
+        </Droppable>
     );
 };
 

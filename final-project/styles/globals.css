@@ -279,9 +279,11 @@ button:hover {
     text-transform: uppercase;
 }
 
-.stacks-container .stack ul {
+.stacks-container .stack .stacklist {
     display: flex;
     flex-direction: column;
+    min-width: 24vw;
+    min-height: 40vh;
 }
 
 .stacks-container .stack .add-item {

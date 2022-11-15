@@ -2,7 +2,12 @@ import { Stack, Card } from "@prisma/client";
 import CreateStack from "./CreateStack";
 import SingleStackComponent from "./SingleStack";
 import { useState, useEffect } from "react";
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import {
+    DragDropContext,
+    Droppable,
+    Draggable,
+    DropResult,
+} from "react-beautiful-dnd";
 import { useRouter } from "next/router";
 
 interface StackProps {
@@ -39,7 +44,8 @@ const StacksComponent: React.FC<StackProps> = (props: StackProps) => {
     const updateStacks = (
         cardId: string | undefined,
         oldStackId: string | undefined,
-        newStackId: string | undefined
+        newStackId: string | undefined,
+        newCardIndex: number | null = null
     ) => {
         let cardToUpdate: Card | undefined;
 
@@ -59,12 +65,17 @@ const StacksComponent: React.FC<StackProps> = (props: StackProps) => {
 
         const addCard = removeCard?.map((stack) => {
             if (stack.id === newStackId) {
-                stack.cards =
-                    stack.cards && cardToUpdate
-                        ? [cardToUpdate, ...stack.cards]
-                        : cardToUpdate
+                if (stack.cards && cardToUpdate) {
+                    if (!newCardIndex) {
+                        stack.cards = [cardToUpdate, ...stack.cards];
+                    } else {
+                        stack.cards.splice(newCardIndex, 0, cardToUpdate);
+                    }
+                } else {
+                    stack.cards = cardToUpdate
                         ? [cardToUpdate]
                         : [...stack.cards];
+                }
             }
             return stack;
         });
@@ -85,11 +96,49 @@ const StacksComponent: React.FC<StackProps> = (props: StackProps) => {
             );
         });
 
+    const moveCard = async (stackId: string, cardId: string) => {
+        const update = await fetch("/api/update/card", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ stackId, cardId }),
+        });
+        const res = await update.json();
+    };
+
+    const onDragEndHandler = (result: DropResult) => {
+        const { draggableId, destination, source } = result;
+        console.log(result);
+        if (
+            !destination ||
+            (destination.droppableId === source.droppableId &&
+                destination.index === source.index)
+        ) {
+            return;
+        } else {
+            if (destination.droppableId !== source.droppableId) {
+                moveCard(destination.droppableId, draggableId);
+                updateStacks(
+                    draggableId,
+                    source.droppableId,
+                    destination.droppableId,
+                    destination.index
+                );
+            }
+        }
+    };
+
     return (
-        <div className="stacks">
-            {showStacks}
-            <CreateStack addNewStack={addNewStack} boardId={props.boardId} />
-        </div>
+        <DragDropContext onDragEnd={onDragEndHandler}>
+            <div className="stacks">
+                {showStacks}
+                <CreateStack
+                    addNewStack={addNewStack}
+                    boardId={props.boardId}
+                />
+            </div>
+        </DragDropContext>
     );
 };
 
