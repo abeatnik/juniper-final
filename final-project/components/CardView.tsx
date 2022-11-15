@@ -1,5 +1,5 @@
 import { User, Card, Comment } from "@prisma/client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, KeyboardEvent } from "react";
 import DeleteCard from "./DeleteCard";
 import Comments from "./Comments";
 import AddComment from "./AddComment";
@@ -15,6 +15,7 @@ interface CardProps {
         oldStackId: string | undefined,
         newStackId: string | undefined
     ) => void;
+    updateCard: (card: Card) => void;
 }
 
 const CardView: React.FC<CardProps> = ({
@@ -23,14 +24,20 @@ const CardView: React.FC<CardProps> = ({
     deleteCard,
     stackName,
     updateStacks,
+    updateCard,
 }) => {
     const [showOptions, setShowOptions] = useState(false);
     const [comments, setComments] = useState<
         (Comment & { user: User })[] | null
     >(null);
+    const [editable, setEditable] = useState(false);
+    const [description, setDescription] = useState("");
+    const [title, setTitle] = useState("");
 
     useEffect(() => {
         getComments(card.id);
+        card.description && setDescription(card.description);
+        card.title && setTitle(card.title);
     }, []);
 
     const toggleOptions = () => {
@@ -53,6 +60,36 @@ const CardView: React.FC<CardProps> = ({
         allComments && setComments(allComments);
     };
 
+    const handleEdit = (
+        e:
+            | React.MouseEvent<HTMLDivElement>
+            | React.MouseEvent<HTMLHeadingElement>
+    ) => {
+        if (e.detail < 2) {
+            return;
+        }
+        setEditable(true);
+    };
+
+    const handleEditSubmit = async (
+        e:
+            | React.KeyboardEvent<HTMLTextAreaElement>
+            | React.KeyboardEvent<HTMLInputElement>
+    ) => {
+        if (e.key !== "Enter") {
+            return;
+        }
+        const data = await fetch("/api/update/card-info", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ description, title, cardId: card.id }),
+        });
+        const newCard = await data.json();
+        console.log(newCard);
+        newCard && updateCard(newCard);
+        setEditable(false);
+    };
+
     return (
         <div className="card-background">
             <div
@@ -61,7 +98,29 @@ const CardView: React.FC<CardProps> = ({
             >
                 <div className="scroll-box">
                     <div className="top">
-                        <h2>{card.title}</h2>
+                        {!editable && (
+                            <h2 onClick={handleEdit}>{title || card.title}</h2>
+                        )}
+                        {editable && (
+                            <>
+                                <input
+                                    name="cardTitle"
+                                    value={title}
+                                    onChange={(e) => setTitle(e.target.value)}
+                                    onKeyDown={handleEditSubmit}
+                                />
+                                <button
+                                    className="nav-button"
+                                    onClick={() => {
+                                        setEditable(false);
+                                        setTitle(card.title || "");
+                                    }}
+                                >
+                                    Cancel
+                                </button>
+                            </>
+                        )}
+
                         <div>
                             <button className="nav-button" onClick={toggleCard}>
                                 x
@@ -81,10 +140,34 @@ const CardView: React.FC<CardProps> = ({
                                 card.createdAt
                             ).toUTCString()}`}</p>
                         </div>
-                        <div className="description">
-                            <h4>Description</h4>
-                            <p>{card.description}</p>
-                        </div>
+                        {!editable && (
+                            <div className="description" onClick={handleEdit}>
+                                <h4>Description</h4>
+                                <p>{description || card.description}</p>
+                            </div>
+                        )}
+                        {editable && (
+                            <div className="description">
+                                <h4>Description</h4>
+                                <textarea
+                                    name="cardDescription"
+                                    value={description}
+                                    onChange={(e) =>
+                                        setDescription(e.target.value)
+                                    }
+                                    onKeyDown={handleEditSubmit}
+                                />
+                                <button
+                                    className="nav-button"
+                                    onClick={() => {
+                                        setEditable(false);
+                                        setDescription(card.description || "");
+                                    }}
+                                >
+                                    x
+                                </button>
+                            </div>
+                        )}
                     </div>
                     <div className="comments">
                         <AddComment
@@ -101,6 +184,7 @@ const CardView: React.FC<CardProps> = ({
                     <button className="nav-button" onClick={toggleOptions}>
                         x
                     </button>
+                    <button onClick={() => setEditable(true)}>edit card</button>
                     <MoveCard
                         updateStacks={updateStacks}
                         card={card}

@@ -11,6 +11,7 @@ interface SingleCardProps {
         oldStackId: string | undefined,
         newStackId: string | undefined
     ) => void;
+    updateCard: (card: Card) => void;
 }
 
 const SingleCard: React.FC<SingleCardProps> = ({
@@ -18,6 +19,7 @@ const SingleCard: React.FC<SingleCardProps> = ({
     stackName,
     deleteCard,
     updateStacks,
+    updateCard,
 }) => {
     const [showCard, setShowCard] = useState(false);
 
@@ -34,6 +36,7 @@ const SingleCard: React.FC<SingleCardProps> = ({
             </div>
             {showCard && (
                 <CardView
+                    updateCard={updateCard}
                     card={card}
                     toggleCard={toggleCard}
                     stackName={stackName}

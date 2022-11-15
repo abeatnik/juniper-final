@@ -14,6 +14,7 @@ interface CardProps {
         oldStackId: string | undefined,
         newStackId: string | undefined
     ) => void;
+    updateCard: (card: Card) => void;
 }
 
 const CardsComponent: React.FC<CardProps> = (props: CardProps) => {
@@ -48,6 +49,9 @@ const CardsComponent: React.FC<CardProps> = (props: CardProps) => {
                                                     }
                                                     updateStacks={
                                                         props.updateStacks
+                                                    }
+                                                    updateCard={
+                                                        props.updateCard
                                                     }
                                                 />
                                             </div>

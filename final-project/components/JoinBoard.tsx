@@ -59,7 +59,7 @@ const JoinBoard = () => {
                     )}
                     {approved && (
                         <p>
-                            Success!You are now a member of{" "}
+                            Success! You are now a member of{" "}
                             <Link href={url}>{boardName}</Link>
                         </p>
                     )}

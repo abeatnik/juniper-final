@@ -12,12 +12,14 @@ interface SingleStackProps {
         newStackId: string | undefined
     ) => void;
     addNewCard: (card: Card) => void;
+    updateCard: (card: Card) => void;
 }
 
 const SingleStackComponent: React.FC<SingleStackProps> = ({
     stack,
     updateStacks,
     addNewCard,
+    updateCard,
 }) => {
     const [stackCards, setStackCards] = useState<Card[]>([]);
 
@@ -39,6 +41,7 @@ const SingleStackComponent: React.FC<SingleStackProps> = ({
                 stackId={stack && stack.id}
                 deleteCard={deleteCard}
                 updateStacks={updateStacks}
+                updateCard={updateCard}
             />
             <CreateCard addNewCard={addNewCard} stackId={stack && stack.id} />
         </div>

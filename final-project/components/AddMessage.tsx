@@ -44,9 +44,6 @@ const AddMessage: React.FC<AddMessageProps> = ({ boardId, addNewMessage }) => {
                         onKeyDown={handleKeyDown}
                     />
                     <button type="submit">Send</button>
-                    <button className="close" onClick={() => setText("")}>
-                        Cancel
-                    </button>
                 </form>
             </div>
         </>

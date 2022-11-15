@@ -82,12 +82,32 @@ const StacksComponent: React.FC<StackProps> = (props: StackProps) => {
         addCard && setAllStacks([...addCard]);
     };
 
+    const updateCard = (card: Card) => {
+        console.log("updating card...");
+        const updated = allStacks?.map((stack) => {
+            if (stack.id === card.stackId) {
+                stack.cards =
+                    stack.cards &&
+                    stack.cards.map((item) => {
+                        if (item.id === card.id) {
+                            return card;
+                        } else {
+                            return item;
+                        }
+                    });
+            }
+            return stack;
+        });
+        updated && setAllStacks([...updated]);
+    };
+
     const showStacks =
         allStacks &&
         allStacks.map((stack, index) => {
             return (
                 <div key={stack.id}>
                     <SingleStackComponent
+                        updateCard={updateCard}
                         addNewCard={addNewCard}
                         stack={stack}
                         updateStacks={updateStacks}
