@@ -23,7 +23,7 @@ const LoginLogout: React.FC = () => {
                     href="/"
                     onClick={() => {
                         router.push("/");
-                        signOut();
+                        setTimeout(() => signOut(), 100);
                     }}
                 >
                     Logout

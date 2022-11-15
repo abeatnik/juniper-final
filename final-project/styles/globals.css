@@ -345,7 +345,7 @@ button.user-info p {
     border-radius: 2vh;
     padding-right: 2vh;
     padding-left: 2vh;
-    margin-bottom: 2vh;
+    margin-bottom: 1vh;
     min-height: 6vh;
     height: auto;
     box-shadow: 2px 2px 40px rgba(0, 0, 0, 0.06),
