@@ -29,6 +29,7 @@ ul {
 }
 
 button {
+    cursor: pointer;
     width: 20vh;
     height: 6vh;
     border-radius: 3em 3em;
@@ -46,40 +47,47 @@ button {
 }
 
 #home-button:hover {
-    background-image: url("../public/yellow.jpg");
+    /* background-image: url("../public/yellow.jpg"); */
+    background-color: rgb(224, 224, 206);
     transform: none;
 }
 
 #members-button:hover {
-    background-image: url("../public/light-green.jpg");
+    /* background-image: url("../public/light-green.jpg");
     background-position: 0% 40%;
-    background-size: 140%;
+    background-size: 140%; */
+    background-color: rgb(224, 224, 206);
     transform: none;
 }
 
 #add-member-button:hover {
-    background-image: url("../public/olive.jpg");
+    /* background-image: url("../public/olive.jpg");
     background-position: 40% 0%;
-    background-size: 130%;
+    background-size: 130%; */
+    background-color: rgb(224, 224, 206);
     transform: none;
 }
 
 #join-board-button:hover {
-    background-image: url("../public/turquoise.jpg");
+    /* background-image: url("../public/turquoise.jpg");
     background-position: 40% 0%;
-    background-size: 130%;
+    background-size: 130%; */
+    background-color: rgb(224, 224, 206);
     transform: none;
 }
 
 #login-button:hover {
     background-image: url("../public/yellow.jpg");
+    background-size: 170%;
     transform: none;
+    /* background-color: rgb(224, 224, 206); */
 }
 
 #logout-button:hover {
-    background-image: url("../public/dark-blue.jpg");
+    /* background-image: url("../public/dark-blue.jpg");
     background-position: 40% 0%;
-    background-size: 130%;
+    background-size: 130%; */
+    background-color: rgb(224, 224, 206);
     transform: none;
 }
 
@@ -195,8 +203,12 @@ button:hover {
 
 .main-app {
     width: 100vw;
+    min-height: 88vh;
     padding: 5vh;
     overflow-x: hidden;
+    /* background-color: rgb(159, 159, 118); */
+    /* background-color: rgb(224, 224, 206); */
+    background-color: rgb(255, 255, 255);
 }
 
 .board-list {
@@ -245,17 +257,18 @@ button:hover {
 .stacks-container {
     margin-left: -6vw;
     width: 100%;
-    min-height: 60vh;
+    min-height: 58vh;
 }
 
 .stacks-container .stacks {
     min-width: 100%;
     height: 100%;
-    padding: 10vh;
+    margin-left: 4vh;
+    margin-right: 4vh;
+    padding: 8vh;
     display: flex;
     justify-content: space-between;
     overflow-x: scroll;
-    background-color: white;
 }
 
 .stacks-container .stack {
@@ -264,6 +277,7 @@ button:hover {
     min-width: 24vw;
     min-height: 40vh;
     margin-right: 4vh;
+    background-color: white;
     border: 1px solid black;
     box-shadow: 2px 2px 40px rgba(0, 0, 0, 0.04),
         -2px -2px 40px rgba(0, 0, 0, 0.04);
@@ -534,6 +548,7 @@ button:hover {
 .chat-container {
     position: absolute;
     /* background-image: url("../public/painting-green.jpg"); */
+    background-color: rgb(224, 224, 206);
     right: 0;
     top: 12vh;
     padding: 2vh;
@@ -542,7 +557,7 @@ button:hover {
     border-bottom: 1px solid black;
     width: 27vw;
     min-height: 88vh;
-    background-color: rgb(228, 228, 228);
+    /* background-color: rgb(228, 228, 228); */
     transition: all 0.3 ease-in-out;
     box-shadow: -2px 0px 40px rgba(0, 0, 0, 0.3);
     /* animation: 0.6s ease-out 0s 1 slideIn forwards; */
@@ -611,7 +626,6 @@ button:hover {
     padding: 1vh;
     border: 1px solid black;
     border-radius: 2vh;
-    box-shadow: 0px 2px 40px rgba(0, 0, 0, 0.2);
 }
 
 .chat-container .message-container .buttons {

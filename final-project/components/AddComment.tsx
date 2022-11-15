@@ -40,9 +40,6 @@ const AddComment: React.FC<AddCommentProps> = ({ cardId, addNewComment }) => {
                     />
                     <div className="buttons">
                         <button type="submit">Send</button>
-                        <button className="close" onClick={() => setText("")}>
-                            Reset
-                        </button>
                     </div>
                 </form>
             </div>

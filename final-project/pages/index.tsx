@@ -58,7 +58,7 @@ const Home: React.FC<HomeProps> = (props: HomeProps) => {
 
     const boardList =
         userBoards &&
-        userBoards.map((board) => (
+        userBoards.map((board, index) => (
             <li key={board.id}>
                 <Link href={`/board/${board.id}`}>
                     <h2>{board.title}</h2>

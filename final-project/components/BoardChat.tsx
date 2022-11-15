@@ -73,9 +73,11 @@ const BoardChat = () => {
     };
 
     const activateChat = () => {
-        setExpanded(true);
-        setNotification(false);
-        messages && setSeen(messages.length);
+        setTimeout(() => {
+            setExpanded(true);
+            setNotification(false);
+            messages && setSeen(messages.length);
+        }, 300);
     };
 
     const deactivateChat = () => {
@@ -94,6 +96,7 @@ const BoardChat = () => {
                     {notification && <div className="notification"></div>}
                 </>
             )}
+
             {expanded && (
                 <div className="chat-container" onMouseLeave={deactivateChat}>
                     <span>
