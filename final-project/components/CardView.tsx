@@ -6,6 +6,7 @@ import AddComment from "./AddComment";
 import MoveCard from "./MoveCard";
 import AssignCard from "./AssignCard";
 import UserIcon from "./UserIcon";
+import AttachLink from "./AttachLink";
 
 interface CardProps {
     card: Card;
@@ -35,12 +36,28 @@ const CardView: React.FC<CardProps> = ({
     const [editable, setEditable] = useState(false);
     const [description, setDescription] = useState("");
     const [title, setTitle] = useState("");
+    const [link, setLink] = useState("");
+    const [preview, setPreview] = useState(false);
+    const [previewImage, setPreviewImage] = useState("");
 
     useEffect(() => {
         getComments(card.id);
         card.description && setDescription(card.description);
         card.title && setTitle(card.title);
+        card.link && setLink(card.link);
+        getLinkPreview();
     }, []);
+
+    const getLinkPreview = async () => {
+        let data = await fetch("/api/preview/", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ link: card.link }),
+        });
+        const { image } = await data.json();
+        console.log(image);
+        setPreviewImage(image);
+    };
 
     const toggleOptions = () => {
         setShowOptions(!showOptions);
@@ -81,12 +98,21 @@ const CardView: React.FC<CardProps> = ({
         if (e.key !== "Enter") {
             return;
         }
-        const data = await fetch("/api/update/card-info", {
+        submitEdit();
+    };
+
+    const submitEdit = async () => {
+        const update = await fetch("/api/update/card-info", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ description, title, cardId: card.id }),
+            body: JSON.stringify({
+                description,
+                title,
+                cardId: card.id,
+                link,
+            }),
         });
-        const newCard = await data.json();
+        const newCard = await update.json();
         console.log(newCard);
         newCard && updateCard(newCard);
         setEditable(false);
@@ -111,6 +137,12 @@ const CardView: React.FC<CardProps> = ({
                                     onChange={(e) => setTitle(e.target.value)}
                                     onKeyDown={handleEditSubmit}
                                 />
+                                <button
+                                    className="nav-button"
+                                    onClick={submitEdit}
+                                >
+                                    Update
+                                </button>
                                 <button
                                     className="nav-button"
                                     onClick={() => {
@@ -170,6 +202,47 @@ const CardView: React.FC<CardProps> = ({
                                 </button>
                             </div>
                         )}
+                        {!editable ? (
+                            <h4 onClick={handleEdit}>Attached Link</h4>
+                        ) : (
+                            <h4>Attach Link:</h4>
+                        )}
+                        {card.link && !editable && (
+                            <div
+                                className="card-link"
+                                onClick={handleEdit}
+                                onMouseEnter={() => setPreview(true)}
+                                onMouseLeave={() =>
+                                    setTimeout(() => setPreview(false), 300)
+                                }
+                            >
+                                <p>
+                                    <a href={card.link}>{card.link}</a>
+                                </p>
+                            </div>
+                        )}
+                        {!card.link && !editable && (
+                            <div className="no-link"></div>
+                        )}
+                        {editable && (
+                            <>
+                                <input
+                                    name="cardLink"
+                                    value={link}
+                                    onChange={(e) => setLink(e.target.value)}
+                                    onKeyDown={handleEditSubmit}
+                                />
+                                <button
+                                    className="nav-button"
+                                    onClick={() => {
+                                        setEditable(false);
+                                        setLink(card.link || "");
+                                    }}
+                                >
+                                    Cancel
+                                </button>
+                            </>
+                        )}
                     </div>
                     <div className="comments">
                         <AddComment
@@ -200,6 +273,21 @@ const CardView: React.FC<CardProps> = ({
                         <AssignCard cardId={card.id} />
                     )}
                     <DeleteCard cardId={card.id} deleteCard={deleteCard} />
+                </div>
+            )}
+            {preview && (
+                <div className="link-preview">
+                    {previewImage ? (
+                        <img
+                            src={
+                                `data:image/jpeg;base64, ${previewImage}` ||
+                                undefined
+                            }
+                            alt="card link"
+                        />
+                    ) : (
+                        <p>Preview loading...</p>
+                    )}
                 </div>
             )}
         </div>

@@ -95,6 +95,7 @@ model Card {
   updatedAt   DateTime @updatedAt @map(name: "updated_at")
   title       String   @db.VarChar(255) 
   description String?  @db.Text
+  link        String?
   stack       Stack    @relation(fields: [stackId], references: [id])
   stackId     String   @db.Uuid
   comments    Comment[]

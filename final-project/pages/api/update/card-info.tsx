@@ -5,7 +5,7 @@ export default async function handle(
     req: NextApiRequest,
     res: NextApiResponse
 ) {
-    const { cardId, title, description } = req.body;
+    const { cardId, title, description, link } = req.body;
     const result = await prisma.card.update({
         where: {
             id: cardId,
@@ -13,6 +13,7 @@ export default async function handle(
         data: {
             description: description,
             title: title,
+            link: link.trim(),
         },
     });
     result && res.json(result);
