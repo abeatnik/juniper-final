@@ -166,9 +166,14 @@ button:hover {
     object-fit: cover;
 }
 
-.nav-bar .board-title {
+.nav-bar .board-title h1 {
     margin-left: 10vh;
     font-size: 1.2em;
+}
+
+.nav-bar .board-title input {
+    margin-left: 2vh;
+    padding: 1vh;
 }
 
 .nav-popup {

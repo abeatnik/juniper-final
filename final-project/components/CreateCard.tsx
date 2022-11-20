@@ -63,7 +63,7 @@ const CreateCard: React.FC<CreateCardProps> = ({ stackId, addNewCard }) => {
                         />
                     </div>
                     <div>
-                        <button type="submit">Create New Card</button>
+                        <button type="submit">Create</button>
                         <button
                             className="nav-button"
                             onClick={() => setEditMode(!editMode)}

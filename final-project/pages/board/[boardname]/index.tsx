@@ -73,13 +73,48 @@ interface BoardProps {
     stackData: (Stack & { cards: Card[] })[] | null;
 }
 
-const Board: React.FC<BoardProps> = (props: BoardProps) => {
+const Board: React.FC<BoardProps> = ({ currentBoard, stackData }) => {
     const [isBrowser, setIsBrowser] = useState(false);
     const { data: session, status } = useSession();
     const userEmail = session?.user && session?.user.email;
     const currentUser =
-        props.currentBoard &&
-        props.currentBoard.users.find((user) => user.email === userEmail);
+        currentBoard &&
+        currentBoard.users.find((user) => user.email === userEmail);
+    const [editable, setEditable] = useState(false);
+    const [title, setTitle] = useState("");
+
+    useEffect(() => {
+        currentBoard && setTitle(currentBoard.title);
+    }, []);
+
+    const handleEdit = (
+        e:
+            | React.MouseEvent<HTMLDivElement>
+            | React.MouseEvent<HTMLHeadingElement>
+    ) => {
+        if (e.detail < 2) {
+            return;
+        }
+        setEditable(true);
+    };
+
+    const handleEditSubmit = async (
+        e: React.KeyboardEvent<HTMLInputElement>
+    ) => {
+        if (e.key !== "Enter") {
+            return;
+        }
+        const data = await fetch("/api/update/board-info", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                title,
+                boardId: currentBoard && currentBoard.id,
+            }),
+        });
+        ///update stack here..
+        setEditable(false);
+    };
 
     return (
         <>
@@ -101,17 +136,40 @@ const Board: React.FC<BoardProps> = (props: BoardProps) => {
                         email={session?.user && session.user.email}
                         name={session?.user && session.user.name}
                     />
-                    <h1 className="board-title">
-                        {props.currentBoard && props.currentBoard.title}
-                    </h1>
+                    <div className="board-title">
+                        {!editable && (
+                            <h1 onClick={handleEdit}>
+                                {currentBoard && currentBoard.title}
+                            </h1>
+                        )}
+                        {editable && (
+                            <>
+                                <input
+                                    name="stackTitle"
+                                    value={title}
+                                    onChange={(e) => setTitle(e.target.value)}
+                                    onKeyDown={handleEditSubmit}
+                                />
+                                <button
+                                    className="nav-button"
+                                    onClick={() => {
+                                        setEditable(false);
+                                        setTitle(
+                                            (currentBoard &&
+                                                currentBoard.title) ||
+                                                ""
+                                        );
+                                    }}
+                                >
+                                    x
+                                </button>
+                            </>
+                        )}
+                    </div>
                 </div>
                 <div className="right">
-                    {props.currentBoard && (
-                        <Members boardId={props.currentBoard.id} />
-                    )}
-                    <AddMember
-                        boardId={props.currentBoard && props.currentBoard.id}
-                    />
+                    {currentBoard && <Members boardId={currentBoard.id} />}
+                    <AddMember boardId={currentBoard && currentBoard.id} />
                     <JoinBoard />
                     <LoginLogout />
                 </div>
@@ -125,10 +183,8 @@ const Board: React.FC<BoardProps> = (props: BoardProps) => {
                     </div> */}
                     <div className="stacks-container">
                         <StacksComponent
-                            stackData={props.stackData}
-                            boardId={
-                                props.currentBoard && props.currentBoard.id
-                            }
+                            stackData={stackData}
+                            boardId={currentBoard && currentBoard.id}
                         />
                     </div>
                     <BoardChat />

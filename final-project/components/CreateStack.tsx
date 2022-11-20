@@ -47,7 +47,7 @@ const CreateStack: React.FC<CreateStackProps> = ({ boardId, addNewStack }) => {
                         />
                     </div>
                     <div>
-                        <button type="submit">Create New Stack</button>
+                        <button type="submit">Create</button>
                         <button
                             className="nav-button"
                             onClick={() => setEditMode(!editMode)}
@@ -62,3 +62,4 @@ const CreateStack: React.FC<CreateStackProps> = ({ boardId, addNewStack }) => {
 };
 
 export default CreateStack;
+

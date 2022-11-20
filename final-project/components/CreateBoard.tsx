@@ -45,7 +45,7 @@ const CreateBoard: React.FC<{ addNewBoard: (board: Board) => void }> = ({
                         onChange={(e) => setTitle(e.target.value)}
                         required
                     />
-                    <button type="submit">Create New Board</button>
+                    <button type="submit">Create</button>
                     <button
                         className="nav-button"
                         onClick={() => setEditMode(!editMode)}
