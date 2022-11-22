@@ -1,8 +1,7 @@
 import { User, Card, Comment } from "@prisma/client";
 import { useState, useEffect, KeyboardEvent } from "react";
 import DeleteCard from "./DeleteCard";
-import Comments from "./Comments";
-import AddComment from "./AddComment";
+import CardComments from "./CardComments";
 import MoveCard from "./MoveCard";
 import AssignCard from "./AssignCard";
 import UserIcon from "./UserIcon";
@@ -30,9 +29,6 @@ const CardView: React.FC<CardProps> = ({
     updateCard,
 }) => {
     const [showOptions, setShowOptions] = useState(false);
-    const [comments, setComments] = useState<
-        (Comment & { user: User })[] | null
-    >(null);
     const [editable, setEditable] = useState(false);
     const [description, setDescription] = useState("");
     const [title, setTitle] = useState("");
@@ -41,7 +37,6 @@ const CardView: React.FC<CardProps> = ({
     const [previewImage, setPreviewImage] = useState("");
 
     useEffect(() => {
-        getComments(card.id);
         card.description && setDescription(card.description);
         card.title && setTitle(card.title);
         card.link && setLink(card.link);
@@ -61,22 +56,6 @@ const CardView: React.FC<CardProps> = ({
 
     const toggleOptions = () => {
         setShowOptions(!showOptions);
-    };
-
-    const getComments = async (cardId: string) => {
-        const data = await fetch(`/api/comments/${cardId}`);
-        const cardComments: (Comment & {
-            user: User;
-        })[] = await data.json();
-        setComments(cardComments);
-    };
-
-    const addNewComment = (comment: (Comment & { user: User }) | null) => {
-        const allComments =
-            comments && comment
-                ? [comment, ...comments.map((item) => item)]
-                : null;
-        allComments && setComments(allComments);
     };
 
     const handleEdit = (
@@ -244,14 +223,7 @@ const CardView: React.FC<CardProps> = ({
                             </>
                         )}
                     </div>
-                    <div className="comments">
-                        <AddComment
-                            cardId={card.id}
-                            addNewComment={addNewComment}
-                        />
-                        <h4>Comments</h4>
-                        <Comments comments={comments && comments} />
-                    </div>
+                    <CardComments cardId={card.id} />
                 </div>
             </div>
             {showOptions && (
