@@ -12,11 +12,6 @@ interface CardProps {
     toggleCard: () => void;
     deleteCard: (cardId: string) => void;
     stackName: string | null;
-    updateStacks: (
-        cardId: string | undefined,
-        oldStackId: string | undefined,
-        newStackId: string | undefined
-    ) => void;
     updateCard: (card: Card) => void;
 }
 
@@ -25,7 +20,6 @@ const CardView: React.FC<CardProps> = ({
     toggleCard,
     deleteCard,
     stackName,
-    updateStacks,
     updateCard,
 }) => {
     const [showOptions, setShowOptions] = useState(false);
@@ -233,7 +227,6 @@ const CardView: React.FC<CardProps> = ({
                     </button>
                     <button onClick={() => setEditable(true)}>edit card</button>
                     <MoveCard
-                        updateStacks={updateStacks}
                         card={card}
                         stackName={stackName}
                         toggleOptions={toggleOptions}

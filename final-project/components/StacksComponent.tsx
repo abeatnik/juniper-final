@@ -9,81 +9,30 @@ import {
     DropResult,
 } from "react-beautiful-dnd";
 import { useRouter } from "next/router";
-import { useAppSelector } from "../hooks/store-hooks";
+import { useAppSelector, useAppDispatch } from "../hooks/store-hooks";
+import {
+    addNewStack,
+    updateStacks,
+    addNewCard,
+    CurrentBoard,
+} from "../redux/currentBoard/slice";
 
 interface StackProps {
-    stackData: (Stack & { cards: Card[] })[] | null;
     boardId: string | null;
 }
 
 const StacksComponent: React.FC<StackProps> = (props: StackProps) => {
-    const router = useRouter();
     const boardState = useAppSelector((state) => state.currentBoard);
-    console.log("redux", boardState);
+    const stackData: (Stack & { cards: Card[] })[] | null =
+        boardState.currentBoard ? boardState.currentBoard.stacks : null;
     const [allStacks, setAllStacks] = useState<
         (Stack & { cards: Card[] })[] | null
     >(null);
-    // const [showStacks, setShowStacks] = useState<JSX.Element[] | null>(null);
+    const dispatch = useAppDispatch();
 
     useEffect(() => {
-        props.stackData && setAllStacks(props.stackData);
-    }, []);
-
-    const addNewStack = (stack: Stack & { cards: Card[] }) => {
-        allStacks && setAllStacks([...allStacks, stack]);
-    };
-
-    const addNewCard = (card: Card) => {
-        const cardStack = card.stackId;
-        const newStackState = allStacks?.map((stack) => {
-            if (stack.id === cardStack) {
-                stack.cards = stack.cards ? [...stack.cards, card] : [card];
-            }
-            return stack;
-        });
-        newStackState && setAllStacks(newStackState);
-    };
-
-    const updateStacks = (
-        cardId: string | undefined,
-        oldStackId: string | undefined,
-        newStackId: string | undefined,
-        newCardIndex: number | null = null
-    ) => {
-        let cardToUpdate: Card | undefined;
-
-        const removeCard = allStacks?.map((stack) => {
-            if (stack.id === oldStackId) {
-                stack.cards = [...stack.cards].filter((card) => {
-                    if (card.id !== cardId) {
-                        return true;
-                    } else {
-                        cardToUpdate = card;
-                        return false;
-                    }
-                });
-            }
-            return stack;
-        });
-
-        const addCard = removeCard?.map((stack) => {
-            if (stack.id === newStackId) {
-                if (stack.cards && cardToUpdate) {
-                    if (!newCardIndex) {
-                        stack.cards = [cardToUpdate, ...stack.cards];
-                    } else {
-                        stack.cards.splice(newCardIndex, 0, cardToUpdate);
-                    }
-                } else {
-                    stack.cards = cardToUpdate
-                        ? [cardToUpdate]
-                        : [...stack.cards];
-                }
-            }
-            return stack;
-        });
-        addCard && setAllStacks([...addCard]);
-    };
+        stackData && setAllStacks(stackData);
+    }, [stackData]);
 
     const updateCard = (card: Card) => {
         console.log("updating card...");
@@ -111,9 +60,7 @@ const StacksComponent: React.FC<StackProps> = (props: StackProps) => {
                 <div key={stack.id}>
                     <SingleStackComponent
                         updateCard={updateCard}
-                        addNewCard={addNewCard}
                         stack={stack}
-                        updateStacks={updateStacks}
                     />
                 </div>
             );
@@ -168,11 +115,13 @@ const StacksComponent: React.FC<StackProps> = (props: StackProps) => {
         } else {
             if (destination.droppableId !== source.droppableId) {
                 moveCard(destination.droppableId, draggableId);
-                updateStacks(
-                    draggableId,
-                    source.droppableId,
-                    destination.droppableId,
-                    destination.index
+                dispatch(
+                    updateStacks({
+                        cardId: draggableId,
+                        oldStackId: source.droppableId,
+                        newStackId: destination.droppableId,
+                        newCardIndex: destination.index,
+                    })
                 );
             } else if (destination.index !== source.index) {
                 reshuffleCards(

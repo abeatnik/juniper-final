@@ -90,8 +90,15 @@ const Board: React.FC<BoardProps> = ({ currentBoard, stackData }) => {
     const dispatch = useAppDispatch();
 
     useEffect(() => {
-        currentBoard && dispatch(dispatchStacks({ currentBoard }));
         currentBoard && setTitle(currentBoard.title);
+    }, []);
+
+    useEffect(() => {
+        console.log("dispatching board");
+        currentBoard && dispatch(dispatchStacks({ currentBoard }));
+        return () => {
+            dispatch(dispatchStacks({ currentBoard: null }));
+        };
     }, []);
 
     const handleEdit = (
@@ -190,7 +197,6 @@ const Board: React.FC<BoardProps> = ({ currentBoard, stackData }) => {
                     </div> */}
                     <div className="stacks-container">
                         <StacksComponent
-                            stackData={stackData}
                             boardId={currentBoard && currentBoard.id}
                         />
                     </div>

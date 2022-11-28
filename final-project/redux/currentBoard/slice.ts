@@ -46,6 +46,7 @@ export const BoardSlice = createSlice({
                     }
                     return stack;
                 });
+            //An immer producer returned a new value *and* modified its draft. Either return a new value *or* modify the draft.
             const addCard: (Stack & { cards: Card[] })[] | null =
                 removeCard?.map((stack) => {
                     if (stack.id === action.payload.newStackId) {
@@ -113,6 +114,7 @@ export const BoardSlice = createSlice({
                     : null;
             return { currentBoard };
         },
+        // An immer producer returned a new value *and* modified its draft. Either return a new value *or* modify the draft.
     },
 });
 

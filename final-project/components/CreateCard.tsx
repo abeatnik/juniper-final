@@ -1,14 +1,16 @@
 import React, { FormEvent, useState } from "react";
 import { Board, User, Stack, Card } from "@prisma/client";
+import { useAppDispatch } from "../hooks/store-hooks";
+import { addNewCard } from "../redux/currentBoard/slice";
 
 interface CreateCardProps {
-    addNewCard: (card: Card) => void;
     stackId: string | null;
 }
-const CreateCard: React.FC<CreateCardProps> = ({ stackId, addNewCard }) => {
+const CreateCard: React.FC<CreateCardProps> = ({ stackId }) => {
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [editMode, setEditMode] = useState(false);
+    const dispatch = useAppDispatch();
 
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
@@ -23,7 +25,7 @@ const CreateCard: React.FC<CreateCardProps> = ({ stackId, addNewCard }) => {
                 }),
             });
             const newCard = await res.json();
-            addNewCard(newCard);
+            dispatch(addNewCard(newCard));
             setTitle("");
             setDescription("");
             setEditMode(!editMode);

@@ -7,11 +7,6 @@ interface SingleCardProps {
     card: Card;
     deleteCard: (cardId: string) => void;
     stackName: string | null;
-    updateStacks: (
-        cardId: string | undefined,
-        oldStackId: string | undefined,
-        newStackId: string | undefined
-    ) => void;
     updateCard: (card: Card) => void;
 }
 
@@ -19,7 +14,6 @@ const SingleCard: React.FC<SingleCardProps> = ({
     card,
     stackName,
     deleteCard,
-    updateStacks,
     updateCard,
 }) => {
     const [showCard, setShowCard] = useState(false);
@@ -63,7 +57,6 @@ const SingleCard: React.FC<SingleCardProps> = ({
                     toggleCard={toggleCard}
                     stackName={stackName}
                     deleteCard={deleteCard}
-                    updateStacks={updateStacks}
                 />
             )}
         </>

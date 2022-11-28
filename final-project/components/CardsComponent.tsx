@@ -9,11 +9,6 @@ interface CardProps {
     stackName: string | null;
     deleteCard: (cardId: string) => void;
     stackId: string | null;
-    updateStacks: (
-        cardId: string | undefined,
-        oldStackId: string | undefined,
-        newStackId: string | undefined
-    ) => void;
     updateCard: (card: Card) => void;
 }
 
@@ -46,9 +41,6 @@ const CardsComponent: React.FC<CardProps> = (props: CardProps) => {
                                                     stackName={props.stackName}
                                                     deleteCard={
                                                         props.deleteCard
-                                                    }
-                                                    updateStacks={
-                                                        props.updateStacks
                                                     }
                                                     updateCard={
                                                         props.updateCard

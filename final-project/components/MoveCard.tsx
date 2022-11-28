@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { Stack, Card } from "@prisma/client";
+import { useAppDispatch } from "../hooks/store-hooks";
+import { updateStacks } from "../redux/currentBoard/slice";
 
 interface MoveCardProps {
-    updateStacks: (
-        cardId: string | undefined,
-        oldStackId: string | undefined,
-        newStackId: string | undefined
-    ) => void;
     stackName: string | null;
     card: Card | null;
     toggleOptions: () => void;
@@ -17,7 +14,6 @@ interface MoveCardProps {
 const MoveCard: React.FC<MoveCardProps> = ({
     stackName,
     card,
-    updateStacks,
     toggleOptions,
     toggleCard,
 }) => {
@@ -27,6 +23,7 @@ const MoveCard: React.FC<MoveCardProps> = ({
     const boardId = router.asPath.split("/")[2];
     const cardId = card?.id;
     const oldStackId = card?.stackId;
+    const dispatch = useAppDispatch();
 
     useEffect(() => {
         getStacks();
@@ -54,7 +51,14 @@ const MoveCard: React.FC<MoveCardProps> = ({
             setHidden(true);
             toggleOptions();
             toggleCard();
-            updateStacks(cardId, oldStackId, stackId);
+            dispatch(
+                updateStacks({
+                    cardId,
+                    oldStackId,
+                    newStackId: stackId,
+                    newCardIndex: null,
+                })
+            );
         };
 
     const showStacks =

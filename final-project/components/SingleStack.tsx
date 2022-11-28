@@ -6,19 +6,11 @@ import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 
 interface SingleStackProps {
     stack: (Stack & { cards: Card[] }) | null;
-    updateStacks: (
-        cardId: string | undefined,
-        oldStackId: string | undefined,
-        newStackId: string | undefined
-    ) => void;
-    addNewCard: (card: Card) => void;
     updateCard: (card: Card) => void;
 }
 
 const SingleStackComponent: React.FC<SingleStackProps> = ({
     stack,
-    updateStacks,
-    addNewCard,
     updateCard,
 }) => {
     const [stackCards, setStackCards] = useState<Card[]>([]);
@@ -94,10 +86,9 @@ const SingleStackComponent: React.FC<SingleStackProps> = ({
                 stackName={stack && stack.title}
                 stackId={stack && stack.id}
                 deleteCard={deleteCard}
-                updateStacks={updateStacks}
                 updateCard={updateCard}
             />
-            <CreateCard addNewCard={addNewCard} stackId={stack && stack.id} />
+            <CreateCard stackId={stack && stack.id} />
         </div>
     );
 };
