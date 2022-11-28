@@ -5,7 +5,7 @@ const Welcome = () => {
         <>
             <div className="welcome">
                 <div className="logo">
-                    <h1>todototada</h1>
+                    <h1>todotada</h1>
                 </div>
             </div>
         </>

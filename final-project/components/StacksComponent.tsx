@@ -9,6 +9,7 @@ import {
     DropResult,
 } from "react-beautiful-dnd";
 import { useRouter } from "next/router";
+import { useAppSelector } from "../hooks/store-hooks";
 
 interface StackProps {
     stackData: (Stack & { cards: Card[] })[] | null;
@@ -17,6 +18,8 @@ interface StackProps {
 
 const StacksComponent: React.FC<StackProps> = (props: StackProps) => {
     const router = useRouter();
+    const boardState = useAppSelector((state) => state.currentBoard);
+    console.log("redux", boardState);
     const [allStacks, setAllStacks] = useState<
         (Stack & { cards: Card[] })[] | null
     >(null);

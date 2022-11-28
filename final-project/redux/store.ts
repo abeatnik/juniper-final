@@ -1,8 +1,14 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { createSlice } from "@reduxjs/toolkit";
+import { BoardSlice } from "./currentBoard/slice";
 
 const store = configureStore({
-    reducer: {},
+    reducer: {
+        currentBoard: BoardSlice.reducer,
+    },
 });
 
 export default store;
+
+export type RootState = ReturnType<typeof store.getState>;
+
+export type AppDispatch = typeof store.dispatch;

@@ -13,6 +13,11 @@ import HomeButton from "../../../components/HomeButton";
 import { resetServerContext } from "react-beautiful-dnd";
 import { useState, useEffect } from "react";
 import Members from "../../../components/Members";
+import { useAppDispatch } from "../../../hooks/store-hooks";
+import {
+    dispatchStacks,
+    CurrentBoard,
+} from "../../../redux/currentBoard/slice";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
     resetServerContext();
@@ -47,7 +52,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         data && data.users.some((user) => user.email === userEmail);
 
     const currentBoard: Board & {
-        stacks: Stack[];
+        stacks: (Stack & { cards: Card[] })[];
         users: User[];
     } = authorized ? JSON.parse(JSON.stringify(data)) : null;
 
@@ -62,28 +67,30 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
             },
         }));
 
-    const stackData: (Stack & { cards: Card[] }) | null =
-        authorized && JSON.parse(JSON.stringify(allCards));
+    currentBoard.stacks = authorized
+        ? JSON.parse(JSON.stringify(allCards))
+        : currentBoard.stacks;
 
-    return { props: { currentBoard, stackData } };
+    return { props: { currentBoard } };
 };
 
 interface BoardProps {
-    currentBoard: (Board & { users: User[]; stacks: Stack[] }) | null;
+    currentBoard: CurrentBoard["currentBoard"];
     stackData: (Stack & { cards: Card[] })[] | null;
 }
 
 const Board: React.FC<BoardProps> = ({ currentBoard, stackData }) => {
-    const [isBrowser, setIsBrowser] = useState(false);
     const { data: session, status } = useSession();
     const userEmail = session?.user && session?.user.email;
-    const currentUser =
-        currentBoard &&
-        currentBoard.users.find((user) => user.email === userEmail);
+    // const currentUser =
+    //     currentBoard &&
+    //     currentBoard.users.find((user) => user.email === userEmail);
     const [editable, setEditable] = useState(false);
     const [title, setTitle] = useState("");
+    const dispatch = useAppDispatch();
 
     useEffect(() => {
+        currentBoard && dispatch(dispatchStacks({ currentBoard }));
         currentBoard && setTitle(currentBoard.title);
     }, []);
 

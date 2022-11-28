@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../store";
 import { Board, User, Stack, Card } from "@prisma/client";
 
-interface CurrentBoard {
+export interface CurrentBoard {
     currentBoard:
         | (Board & { users: User[]; stacks: (Stack & { cards: Card[] })[] })
         | null;
@@ -23,6 +23,12 @@ export const BoardSlice = createSlice({
     name: "currentBoard",
     initialState,
     reducers: {
+        dispatchStacks: (state, action: PayloadAction<CurrentBoard>) => {
+            const currentBoard = action.payload.currentBoard
+                ? action.payload.currentBoard
+                : null;
+            return { currentBoard };
+        },
         updateStacks: (state, action: PayloadAction<UpdateStacks>) => {
             let cardToUpdate: Card | undefined;
             const removeCard: (Stack & { cards: Card[] })[] | null =
@@ -110,4 +116,5 @@ export const BoardSlice = createSlice({
     },
 });
 
-export const { updateStacks, addNewStack, addNewCard } = BoardSlice.actions;
+export const { dispatchStacks, updateStacks, addNewStack, addNewCard } =
+    BoardSlice.actions;
