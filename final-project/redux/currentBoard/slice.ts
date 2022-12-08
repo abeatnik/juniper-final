@@ -30,6 +30,7 @@ export const BoardSlice = createSlice({
             return { currentBoard };
         },
         updateStacks: (state, action: PayloadAction<UpdateStacks>) => {
+            //An immer producer returned a new value *and* modified its draft. Either return a new value *or* modify the draft.
             let cardToUpdate: Card | undefined;
             const removeCard: (Stack & { cards: Card[] })[] | null =
                 state.currentBoard &&
@@ -46,7 +47,6 @@ export const BoardSlice = createSlice({
                     }
                     return stack;
                 });
-            //An immer producer returned a new value *and* modified its draft. Either return a new value *or* modify the draft.
             const addCard: (Stack & { cards: Card[] })[] | null =
                 removeCard?.map((stack) => {
                     if (stack.id === action.payload.newStackId) {
@@ -75,9 +75,8 @@ export const BoardSlice = createSlice({
                     ? { ...state.currentBoard }
                     : null;
 
-            return { currentBoard };
+            state.currentBoard = currentBoard;
         },
-
         addNewStack: (
             state,
             action: PayloadAction<Stack & { cards: Card[] }>
@@ -91,7 +90,8 @@ export const BoardSlice = createSlice({
                     : state.currentBoard
                     ? { ...state.currentBoard }
                     : null;
-            return { currentBoard };
+            // return { currentBoard };
+            state.currentBoard = currentBoard;
         },
 
         addNewCard: (state, action: PayloadAction<Card>) => {
