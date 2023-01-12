@@ -38,14 +38,15 @@ I wrote the code for this project almost entirely within one week.
 
 ## Technology Stack 
 
-- Next.js / NextAuth / react-beautiful-dnd / Puppeteer / Socket.io
+- Next.js / NextAuth / react-beautiful-dnd / Puppeteer / react-copy-to-clipboard / Socket.io
 - TypeScript 
 - CSS 
 - Prisma 
 - PostgreSQL
 
 ## To Do & ideas for future features
-- add redux state management to simplify the interactions between the different components
+- write component tests in Jest
+- add redux state management to optimize interactions between the different components
 - basic refactoring and clean-up 
 - add more options to the cards: add deadline, add to-do list, archive card 
 - add search function for board content 
