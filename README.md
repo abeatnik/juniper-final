@@ -48,6 +48,7 @@ I wrote the code for this project almost entirely within one week.
 
 - write component tests in Jest
 - basic refactoring and clean-up 
+- make website responsive for mobile screens
 - add redux state management to optimize interactions between the different components
 - add more options to the cards: add deadline, add to-do list, archive card 
 - add search function for board content 
