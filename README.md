@@ -23,7 +23,7 @@ I wrote the code for this project almost entirely within one week.
 
 - Login with GitHub (via NextAuth)
 - overview of personal boards
-- create and rename single or shared workspaces (boards)
+- create single or shared workspaces (boards)
 - create and rename lists (stacks) of cards 
 - create, update, move or delete cards with title, description (optional), link (optional), and assigned person (optional) - all editable content via double-click
 - cards can be moved to another stack via the options menu or via drag and drop (react-beautiful-dnd)
@@ -45,9 +45,10 @@ I wrote the code for this project almost entirely within one week.
 - PostgreSQL
 
 ## To Do & ideas for future features
+
 - write component tests in Jest
-- add redux state management to optimize interactions between the different components
 - basic refactoring and clean-up 
+- add redux state management to optimize interactions between the different components
 - add more options to the cards: add deadline, add to-do list, archive card 
 - add search function for board content 
 - option to link a board to a GitHub repository with the possibility to create cards that refer to commits or pull requests
