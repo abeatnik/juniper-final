@@ -42,21 +42,24 @@ const CardView: React.FC<CardProps> = ({
 
     useEffect(() => {
         getComments(card.id);
-        card.description && setDescription(card.description);
-        card.title && setTitle(card.title);
-        card.link && setLink(card.link);
+        setDescription(card.description || "");
+        setTitle(card.title);
+        setLink(card.link || "");
         getLinkPreview();
-    }, []);
+    }, [card.id, card.description, card.title, card.link]);
 
     const getLinkPreview = async () => {
-        let data = await fetch("/api/preview/", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ link: card.link }),
-        });
-        const { image } = await data.json();
-        console.log(image);
-        setPreviewImage(image);
+        try {
+            let data = await fetch("/api/preview/", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ link: card.link }),
+            });
+            const { image } = await data.json();
+            setPreviewImage(image);
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     const toggleOptions = () => {
@@ -64,19 +67,23 @@ const CardView: React.FC<CardProps> = ({
     };
 
     const getComments = async (cardId: string) => {
-        const data = await fetch(`/api/comments/${cardId}`);
-        const cardComments: (Comment & {
-            user: User;
-        })[] = await data.json();
-        setComments(cardComments);
+        try {
+            const data = await fetch(`/api/comments/${cardId}`);
+            const cardComments: (Comment & {
+                user: User;
+            })[] = await data.json();
+            setComments(cardComments);
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     const addNewComment = (comment: (Comment & { user: User }) | null) => {
-        const allComments =
-            comments && comment
-                ? [comment, ...comments.map((item) => item)]
-                : null;
-        allComments && setComments(allComments);
+        setComments((prevComments) => {
+            return comment && prevComments
+                ? [comment, ...prevComments.map((item) => item)]
+                : prevComments;
+        });
     };
 
     const handleEdit = (
@@ -99,23 +106,27 @@ const CardView: React.FC<CardProps> = ({
             return;
         }
         submitEdit();
+        setEditable(false);
     };
 
     const submitEdit = async () => {
-        const update = await fetch("/api/update/card-info", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                description,
-                title,
-                cardId: card.id,
-                link,
-            }),
-        });
-        const newCard = await update.json();
-        console.log(newCard);
-        newCard && updateCard(newCard);
-        setEditable(false);
+        try {
+            const update = await fetch("/api/update/card-info", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    description,
+                    title,
+                    cardId: card.id,
+                    link,
+                }),
+            });
+            const newCard = await update.json();
+            updateCard(newCard);
+            setEditable(false);
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     return (

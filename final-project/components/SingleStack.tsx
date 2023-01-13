@@ -2,7 +2,6 @@ import { Stack, Card } from "@prisma/client";
 import CardsComponent from "./CardsComponent";
 import CreateCard from "./CreateCard";
 import { useState, useEffect } from "react";
-import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 
 interface SingleStackProps {
     stack: (Stack & { cards: Card[] }) | null;

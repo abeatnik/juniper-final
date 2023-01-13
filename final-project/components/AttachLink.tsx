@@ -14,15 +14,18 @@ const AttachLink: React.FC<AttachLinkProps> = ({ cardId, updateCard }) => {
         if (e.key !== "Enter") {
             return;
         }
-        const data = await fetch("/api/preview", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ url, cardId }),
-        });
-        const updated = await data.json();
-        console.log(updated);
-        updated && updateCard(updated);
-        setOpen(false);
+        try {
+            const data = await fetch("/api/preview", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ url, cardId }),
+            });
+            const updated = await data.json();
+            updateCard(updated);
+            setOpen(false);
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     return (

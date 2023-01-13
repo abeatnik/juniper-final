@@ -34,9 +34,13 @@ const SingleCard: React.FC<SingleCardProps> = ({
     }, [session]);
 
     const getUserInfo = async (email: string | null | undefined) => {
-        const data = await fetch(`/api/user/email/${email}`);
-        const result = await data.json();
-        result && setUserInfo(result);
+        try {
+            const data = await fetch(`/api/user/email/${email}`);
+            const result = await data.json();
+            result && setUserInfo(result);
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     return (

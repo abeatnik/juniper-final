@@ -9,9 +9,13 @@ const UserIcon: React.FC<{ userId: string | null }> = ({ userId }) => {
     }, []);
 
     const getUserInfo = async () => {
-        const data = await fetch(`/api/user/${userId}`);
-        const info = await data.json();
-        setUserData(info);
+        try {
+            const data = await fetch(`/api/user/${userId}`);
+            const info = await data.json();
+            setUserData(info);
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     return (

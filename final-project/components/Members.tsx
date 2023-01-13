@@ -10,10 +10,14 @@ const Members: React.FC<{ boardId: string }> = ({ boardId }) => {
     }, []);
 
     const getMembers = async () => {
-        const data = await fetch(`/api/members/${boardId}`);
-        const result = await data.json();
-        const boardMembers: User[] = result && result.users;
-        setMembers(boardMembers);
+        try {
+            const data = await fetch(`/api/members/${boardId}`);
+            const result = await data.json();
+            const boardMembers: User[] = result && result.users;
+            setMembers(boardMembers);
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     const showMembers =

@@ -16,11 +16,9 @@ interface StackProps {
 }
 
 const StacksComponent: React.FC<StackProps> = (props: StackProps) => {
-    const router = useRouter();
     const [allStacks, setAllStacks] = useState<
         (Stack & { cards: Card[] })[] | null
     >(null);
-    // const [showStacks, setShowStacks] = useState<JSX.Element[] | null>(null);
 
     useEffect(() => {
         props.stackData && setAllStacks(props.stackData);
@@ -83,7 +81,6 @@ const StacksComponent: React.FC<StackProps> = (props: StackProps) => {
     };
 
     const updateCard = (card: Card) => {
-        console.log("updating card...");
         const updated = allStacks?.map((stack) => {
             if (stack.id === card.stackId) {
                 stack.cards =
@@ -117,14 +114,18 @@ const StacksComponent: React.FC<StackProps> = (props: StackProps) => {
         });
 
     const moveCard = async (stackId: string, cardId: string) => {
-        const update = await fetch("/api/update/card", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ stackId, cardId }),
-        });
-        const res = await update.json();
+        try {
+            const update = await fetch("/api/update/card", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ stackId, cardId }),
+            });
+            const res = await update.json();
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     const reshuffleCards = (

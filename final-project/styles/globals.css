@@ -48,50 +48,27 @@ button {
     min-width: 20vh;
 }
 
-#home-button:hover {
-    /* background-image: url("../public/yellow.jpg"); */
-    /* background-color: rgb(224, 224, 206); */
-
-    transform: none;
-}
-
 #members-button:hover {
-    /* background-image: url("../public/light-green.jpg");
     background-position: 0% 40%;
-    background-size: 140%; */
+    background-size: 140%;
     background-color: rgb(224, 224, 206);
-    transform: none;
 }
 
 #add-member-button:hover {
-    /* background-image: url("../public/olive.jpg");
-    background-position: 40% 0%;
-    background-size: 130%; */
     background-color: rgb(224, 224, 206);
-    transform: none;
 }
 
 #join-board-button:hover {
-    /* background-image: url("../public/turquoise.jpg");
-    background-position: 40% 0%;
-    background-size: 130%; */
     background-color: rgb(224, 224, 206);
-    transform: none;
 }
 
 #login-button:hover {
     background-image: url("../public/yellow.jpg");
     background-size: 170%;
-    transform: none;
-    /* background-color: rgb(224, 224, 206); */
 }
 
 #logout-button:hover {
-    /* background-image: url("../public/dark-blue.jpg");
-    background-position: 40% 0%;
-    background-size: 130%; */
     background-color: rgb(224, 224, 206);
-    transform: none;
 }
 
 #generate-code {
@@ -292,10 +269,6 @@ button.user-info p {
     border: 1px solid black;
     box-shadow: 2px 2px 40px rgba(0, 0, 0, 0.04),
         -2px -2px 40px rgba(0, 0, 0, 0.04);
-}
-.stacks-container .stack:hover {
-    /* background-image: url("../public/painting-green.jpg");
-    background-size: 140%; */
 }
 
 .stacks-container .stack h2 {
@@ -779,7 +752,7 @@ button.user-info p {
     }
 
     .stacks-container .stack {
-        widtb: 80vw;
+        width: 80vw;
     }
 }
 

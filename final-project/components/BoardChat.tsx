@@ -30,12 +30,10 @@ const BoardChat = () => {
     });
 
     const initSocket = async () => {
-        console.log("initializing socket");
         await fetch("/api/socket");
         socket = socket || io();
 
         socket.on("connect", () => {
-            console.log("connected");
             socket.emit("room", `room-${boardId}`);
             setConnected(true);
         });
@@ -47,12 +45,9 @@ const BoardChat = () => {
             }
         });
 
-        socket.on("welcome", () => {
-            console.log("hurray", socket.id);
-        });
+        socket.on("welcome", () => {});
 
         socket.on("disconnect", () => {
-            console.log("disconnected");
             setConnected(false);
         });
 
@@ -60,11 +55,15 @@ const BoardChat = () => {
     };
 
     const getMessages = async () => {
-        const data = await fetch(`/api/messages/${boardId}`);
-        const boardMessages: (Message & {
-            user: User;
-        })[] = await data.json();
-        setMessages(boardMessages);
+        try {
+            const data = await fetch(`/api/messages/${boardId}`);
+            const boardMessages: (Message & {
+                user: User;
+            })[] = await data.json();
+            setMessages(boardMessages);
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     const addNewMessage = (message: Message & { user: User }) => {

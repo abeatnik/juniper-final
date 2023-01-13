@@ -15,19 +15,23 @@ const AssignCard: React.FC<{ cardId: string }> = ({ cardId }) => {
     const getMembers = async () => {
         const data = await fetch(`/api/members/${boardId}`);
         const result = await data.json();
-        const boardMembers: User[] = result && result.users;
+        const boardMembers: User[] = result?.users;
         setMembers(boardMembers);
     };
 
     const assignUser = (userId: string) => async () => {
-        const data = await fetch("/api/update/card-assign", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ userId, cardId }),
-        });
-        setHidden(true);
+        try {
+            await fetch("/api/update/card-assign", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ userId, cardId }),
+            });
+            setHidden(true);
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     const showMembers =

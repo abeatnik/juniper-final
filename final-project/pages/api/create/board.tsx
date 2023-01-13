@@ -20,6 +20,5 @@ export default async function handle(
             },
         },
     });
-    console.log("inserted in db: ", result);
     res.json(result);
 }

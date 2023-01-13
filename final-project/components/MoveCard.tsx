@@ -33,28 +33,37 @@ const MoveCard: React.FC<MoveCardProps> = ({
     }, []);
 
     const getStacks = async () => {
-        const data = await fetch(`/api/stacks/${boardId}`);
-        const result = await data.json();
-        const allStacks: Stack[] = result && result.stacks;
-        const stacks =
-            allStacks && allStacks.filter((stack) => stack.title !== stackName);
-        setOtherStacks(stacks);
+        try {
+            const data = await fetch(`/api/stacks/${boardId}`);
+            const result = await data.json();
+            const allStacks: Stack[] = result && result.stacks;
+            const stacks =
+                allStacks &&
+                allStacks.filter((stack) => stack.title !== stackName);
+            setOtherStacks(stacks);
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     const moveCard =
         (stackId: string) => async (e: React.MouseEvent<HTMLButtonElement>) => {
-            const update = await fetch("/api/update/card", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ stackId, cardId }),
-            });
-            const res = await update.json();
-            setHidden(true);
-            toggleOptions();
-            toggleCard();
-            updateStacks(cardId, oldStackId, stackId);
+            try {
+                const update = await fetch("/api/update/card", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ stackId, cardId }),
+                });
+                const res = await update.json();
+                setHidden(true);
+                toggleOptions();
+                toggleCard();
+                updateStacks(cardId, oldStackId, stackId);
+            } catch (error) {
+                console.log(error);
+            }
         };
 
     const showStacks =
