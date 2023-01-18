@@ -16,6 +16,7 @@ import Router from "next/router";
 import { useEffect } from "react";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
+    resetServerContext();
     const session = await unstable_getServerSession(
         context.req,
         context.res,
