@@ -45,8 +45,6 @@ const BoardChat = () => {
             }
         });
 
-        socket.on("welcome", () => {});
-
         socket.on("disconnect", () => {
             setConnected(false);
         });

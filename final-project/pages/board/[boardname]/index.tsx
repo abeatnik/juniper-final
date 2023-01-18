@@ -12,9 +12,10 @@ import JoinBoard from "../../../components/JoinBoard";
 import HomeButton from "../../../components/HomeButton";
 import { resetServerContext } from "react-beautiful-dnd";
 import Members from "../../../components/Members";
+import Router from "next/router";
+import { useEffect } from "react";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-    resetServerContext();
     const session = await unstable_getServerSession(
         context.req,
         context.res,
@@ -73,7 +74,7 @@ interface BoardProps {
 const Board: React.FC<BoardProps> = (props: BoardProps) => {
     const { data: session, status } = useSession();
 
-    return (
+    return status === "authenticated" ? (
         <>
             <div className="nav-bar">
                 <div className="left">
@@ -109,6 +110,10 @@ const Board: React.FC<BoardProps> = (props: BoardProps) => {
                     <BoardChat />
                 </div>
             </div>
+        </>
+    ) : (
+        <>
+            <p>Loading...</p>
         </>
     );
 };

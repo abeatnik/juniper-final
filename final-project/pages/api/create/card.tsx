@@ -13,6 +13,5 @@ export default async function handle(
             stackId: stackId,
         },
     });
-    console.log("inserted in db: ", result);
     res.json(result);
 }

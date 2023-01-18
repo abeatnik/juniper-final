@@ -12,6 +12,5 @@ export default async function handle(
             boardId: boardId,
         },
     });
-    console.log("inserted in db: ", result);
     res.json(result);
 }
