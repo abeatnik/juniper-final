@@ -27,5 +27,5 @@ export const authOptions = {
     //     // newUser: '/auth/new-user' // New users will be directed here on first sign in (leave the property out if not of interest)
     // },
     adapter: PrismaAdapter(prisma),
-    secret: process.env.SECRET,
+    secret: process.env.NEXTAUTH_SECRET,
 };
