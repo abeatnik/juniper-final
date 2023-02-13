@@ -32,7 +32,7 @@
     "devDependencies": {
         "@types/react-beautiful-dnd": "^13.1.2",
         "@types/react-copy-to-clipboard": "^5.0.4",
-        "prisma": "^4.6.0"
+        "prisma": "^4.10.1"
     },
     "prisma": {
         "seed": "ts-node prisma/seed.ts"
