@@ -5,7 +5,7 @@ export default async function handle(
     req: NextApiRequest,
     res: NextApiResponse
 ) {
-    const { cardId, stackId } = req.body;
+    const { cardId, stackId} = req.body;
     const result = await prisma.card.update({
         where: {
             id: cardId,

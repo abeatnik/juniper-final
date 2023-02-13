@@ -35,6 +35,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
     const data = userObj && userObj.boards;
     const boards: Board[] = JSON.parse(JSON.stringify(data));
+    console.log({ props: { boards } });
     return { props: { boards } };
 };
 
