@@ -1,7 +1,7 @@
 import { GetServerSideProps } from "next";
 import prisma from "../lib/prisma";
 import { Board } from "@prisma/client";
-import NextAuth from "./api/auth/[...nextauth]";
+import { authOptions } from "./api/auth/[...nextauth]";
 import { unstable_getServerSession } from "next-auth/next";
 import CreateBoard from "../components/CreateBoard";
 import { useState, useEffect } from "react";
@@ -16,7 +16,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     const session = await unstable_getServerSession(
         context.req,
         context.res,
-        NextAuth
+        authOptions
     );
 
     const userEmail =
