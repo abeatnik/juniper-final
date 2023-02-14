@@ -1,7 +1,7 @@
 # todotada – a project-management tool 
 
 
-Check out the deployed project [here](https://todotada.vercel.app/).
+<!--Check out the deployed project [here](https://todotada.vercel.app/).-->
 
 
 ## Overview
