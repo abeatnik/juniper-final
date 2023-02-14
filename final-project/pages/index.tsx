@@ -24,22 +24,24 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
             ? session.user.email
             : "";
 
-    const userObj = await prisma.user.findUnique({
-        where: {
-            email: userEmail,
-        },
-        select: {
-            boards: true,
-        },
-    });
+    const userObj =
+        (await prisma.user.findUnique({
+            where: {
+                email: userEmail,
+            },
+            select: {
+                boards: true,
+            },
+        })) || null;
 
     const data = userObj && userObj.boards;
-    const boards: Board[] = JSON.parse(JSON.stringify(data));
+    const boards: Board[] | null =
+        (data && JSON.parse(JSON.stringify(data))) || null;
     return { props: { boards } };
 };
 
 interface HomeProps {
-    boards: Board[];
+    boards: Board[] | null;
 }
 
 const Home: React.FC<HomeProps> = (props: HomeProps) => {
