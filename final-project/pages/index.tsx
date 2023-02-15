@@ -24,15 +24,14 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
             ? session.user.email
             : "";
 
-    const userObj =
-        (await prisma.user.findUnique({
-            where: {
-                email: userEmail,
-            },
-            select: {
-                boards: true,
-            },
-        })) || null;
+    const userObj = await prisma.user.findUnique({
+        where: {
+            email: userEmail,
+        },
+        select: {
+            boards: true,
+        },
+    });
 
     const data = userObj && userObj.boards;
     const boards: Board[] | null =
